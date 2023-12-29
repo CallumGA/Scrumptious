@@ -2,7 +2,6 @@
 
 from flask import Flask
 from database.ScrumptiousDatabase import ScrumptiousDatabase
-from database.db import db
 from controllers.HomeController import HomeController
 
 app = Flask(__name__)
