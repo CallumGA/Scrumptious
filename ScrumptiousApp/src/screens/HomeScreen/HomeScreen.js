@@ -15,7 +15,7 @@ const HomeScreen = () => {
         console.error('Error fetching data:', error);
       }
     };
-    
+
     fetchData();
   }, []);
 
