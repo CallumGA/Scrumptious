@@ -130,3 +130,4 @@ dist
 .pnp.*
 api/venv
 api/__pycache__/app.cpython-311.pyc
+.DS_Store
