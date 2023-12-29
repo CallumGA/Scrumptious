@@ -1,13 +1,28 @@
 // src/screens/HomeScreen/HomeScreen.js
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import HomeScreenService from '../../services/HomeScreenService';
+
 
 const HomeScreen = () => {
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await HomeScreenService.ping();
+        console.log('Data from API:', data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+    
+    fetchData();
+  }, []);
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Welcome to ScrumptiousApp!</Text>
-      {/* Add more UI elements here as needed */}
+      {/* Other UI elements */}
     </View>
   );
 };

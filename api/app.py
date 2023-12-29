@@ -1,12 +1,11 @@
-# api/app.py
+# MyFlaskApp/app.py
 
 from flask import Flask
+from controllers.HomeController import ping
 
 app = Flask(__name__)
 
-@app.route('/')
-def hello_world():
-    return 'Hello from the Flask backend!'
+app.add_url_rule('/ping', 'ping', ping, methods=['GET'])
 
 if __name__ == '__main__':
     app.run(debug=True)
