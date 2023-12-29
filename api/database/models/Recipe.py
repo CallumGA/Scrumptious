@@ -1,6 +1,6 @@
 # MyFlaskApp/api/database/models.py
 
-from ScrumptiousDatabase import db
+from ..db import db
 
 class Recipe(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -9,7 +9,7 @@ class Recipe(db.Model):
     cook_time = db.Column(db.Integer)
     ingredients = db.Column(db.Text)
     user_id = db.Column(db.Integer, nullable=False)
-    section = db.Column(db.String(50))  # New column for section (e.g., dessert, lunch)
+    section = db.Column(db.String(50))
 
     def __repr__(self):
         return f'<Recipe {self.name}>'

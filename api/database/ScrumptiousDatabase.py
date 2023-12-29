@@ -1,10 +1,8 @@
 # MyFlaskApp/api/database/ScrumptiousDatabase.py
 
-from flask_sqlalchemy import SQLAlchemy
-from models import Recipe
+from .db import db
+from .models import Recipe 
 
-
-db = SQLAlchemy()
 
 class ScrumptiousDatabase:
     @staticmethod

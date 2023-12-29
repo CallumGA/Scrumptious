@@ -27,6 +27,7 @@ const HomeScreen = () => {
         {recipes.map((recipe, index) => (
           <View key={index} style={styles.recipe}>
             <Text style={styles.recipeTitle}>{recipe.name}</Text>
+            <Text>Section: {recipe.section}</Text>
             <Text>Instructions: {recipe.instructions}</Text>
             <Text>Cook Time: {recipe.cook_time} minutes</Text>
             <Text>Ingredients: {recipe.ingredients}</Text>
