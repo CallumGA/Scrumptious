@@ -4,9 +4,6 @@ from flask import jsonify
 from services.HomeService import HomeService
 
 class HomeController:
-    @staticmethod
-    def ping():
-        return jsonify({"message": "pong"}), 200
 
     @staticmethod
     def get_recipes():

@@ -10,7 +10,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 ScrumptiousDatabase.init_app(app)
 
-app.add_url_rule('/ping', 'ping', HomeController.ping, methods=['GET'])
+# HOMEPAGE
 app.add_url_rule('/recipes', 'get_recipes', HomeController.get_recipes, methods=['GET'])
 
 if __name__ == '__main__':
