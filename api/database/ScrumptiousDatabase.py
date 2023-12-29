@@ -1,10 +1,13 @@
 # MyFlaskApp/api/database/ScrumptiousDatabase.py
 
 from flask_sqlalchemy import SQLAlchemy
+from models import Recipe
+
 
 db = SQLAlchemy()
 
-# pull this into its own model class
+# TODO add column in db for "Section" ie; desert, lunch etc.
+
 class Recipe(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), nullable=False)
