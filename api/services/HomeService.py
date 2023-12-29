@@ -1,6 +1,6 @@
 # MyFlaskApp/api/services/HomeService.py
 
-from api.database.ScrumptiousDatabase import Recipe
+from database.ScrumptiousDatabase import Recipe
 
 class HomeService:
     @staticmethod

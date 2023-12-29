@@ -1,7 +1,7 @@
 # MyFlaskApp/controllers/HomeController.py
 
 from flask import jsonify
-from api.services.HomeService import HomeService
+from services.HomeService import HomeService
 
 class HomeController:
     @staticmethod

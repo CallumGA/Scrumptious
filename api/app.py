@@ -1,7 +1,7 @@
 # MyFlaskApp/app.py
 
 from flask import Flask
-from api.database.ScrumptiousDatabase import ScrumptiousDatabase
+from database.ScrumptiousDatabase import ScrumptiousDatabase
 from controllers.HomeController import HomeController
 
 app = Flask(__name__)

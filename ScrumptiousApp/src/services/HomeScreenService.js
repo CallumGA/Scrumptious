@@ -3,6 +3,8 @@
 const BASE_URL = 'http://127.0.0.1:5000'; // URL for iOS simulator
 
 const HomeScreenService = {
+
+  // test ping
   ping: async () => {
     try {
       const response = await fetch(`${BASE_URL}/ping`, {
@@ -16,6 +18,27 @@ const HomeScreenService = {
         throw new Error('Network response was not ok');
       }
 
+      return await response.json();
+    } catch (error) {
+      console.error('Error during fetch operation:', error);
+      throw error;
+    }
+  },
+
+  // get home page recipes
+  getRecipes: async () => {
+    try {
+      const response = await fetch(`${BASE_URL}/recipes`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      
       return await response.json();
     } catch (error) {
       console.error('Error during fetch operation:', error);
