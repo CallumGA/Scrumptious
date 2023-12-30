@@ -3,7 +3,7 @@
 from database.models import Recipe
 from database.db import db
 
-class HomeService:
+class RecipeService:
 
     @staticmethod
     def get_all_recipes():
