@@ -2,15 +2,14 @@
 import React, {useEffect, useState} from 'react';
 import {
   View,
-  Text,
   StyleSheet,
   ScrollView,
-  TouchableOpacity,
-  Image,
   StatusBar,
-  SafeAreaView, // Use SafeAreaView for better spacing on iOS
+  SafeAreaView,
 } from 'react-native';
 import HomeScreenService from '../../services/HomeScreenService';
+import TopNavBar from '../../components/TopNavBar'; // Import TopNavBar
+import BottomNavBar from '../../components/BottomNavBar'; // Import BottomNavBar
 
 const HomeScreen = () => {
   const [recipes, setRecipes] = useState([]);
@@ -24,22 +23,14 @@ const HomeScreen = () => {
         console.error('Error fetching recipes:', error);
       }
     };
+
     fetchData();
   }, []);
 
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="dark-content" />
-      <View style={styles.navbar}>
-        <Text style={styles.navTitle}>Scrumptious</Text>
-        <TouchableOpacity style={styles.hamburger}>
-          <Image
-            source={require('../../assets/menu.png')} // Replace with your image path
-            resizeMode="contain"
-            style={styles.icon}
-          />
-        </TouchableOpacity>
-      </View>
+      <TopNavBar title="Scrumptious" />
       <ScrollView
         style={styles.recipeContainer}
         contentContainerStyle={styles.scrollViewContent}>
@@ -53,29 +44,7 @@ const HomeScreen = () => {
           </View>
         ))}
       </ScrollView>
-      <View style={styles.tabBar}>
-        <TouchableOpacity>
-          <Image
-            source={require('../../assets/search.png')}
-            resizeMode="contain"
-            style={styles.icon}
-          />
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <Image
-            source={require('../../assets/home.png')}
-            resizeMode="contain"
-            style={styles.icon}
-          />
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <Image
-            source={require('../../assets/eat.png')}
-            resizeMode="contain"
-            style={styles.icon}
-          />
-        </TouchableOpacity>
-      </View>
+      <BottomNavBar />
     </SafeAreaView>
   );
 };
@@ -85,41 +54,11 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#ffffff',
   },
-  navbar: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingHorizontal: 15,
-    height: 60,
-    backgroundColor: '#efe4e1',
-    borderBottomWidth: 1,
-    borderBottomColor: '#EFEFEF',
-  },
-  navTitle: {
-    fontWeight: 'bold',
-    fontSize: 22, // Increase the font size
-    color: '#000000', // Change color to black
-    marginLeft: 10,
-  },
-  hamburger: {
-    // If you want to change the style of the hamburger icon, do it here
-  },
-  tabBar: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    height: 60,
-    backgroundColor: '#efe4e1',
-    borderTopWidth: 1,
-    borderTopColor: '#EFEFEF',
-    paddingBottom: 10,
-  },
-  icon: {
-    width: 30,
-    height: 30,
-  },
   recipeContainer: {
     flex: 1,
+  },
+  scrollViewContent: {
+    paddingBottom: 70,
   },
   recipe: {
     backgroundColor: '#eaeaea',
@@ -131,9 +70,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
   },
-  scrollViewContent: {
-    paddingBottom: 70,
-  },
+  // Add any additional styles you may need
 });
 
 export default HomeScreen;
