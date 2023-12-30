@@ -13,18 +13,17 @@ import TopNavBar from '../../components/TopNavBar'; // Import TopNavBar
 import BottomNavBar from '../../components/BottomNavBar'; // Import BottomNavBar
 
 const HomeScreen = () => {
-  const [recipes, setRecipes] = useState([]);
+  const [sections, setSections] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const recipeData = await HomeScreenService.getRecipes();
-        setRecipes(recipeData);
+        const sectionData = await HomeScreenService.getSections();
+        setSections(sectionData);
       } catch (error) {
         console.error('Error fetching recipes:', error);
       }
     };
-
     fetchData();
   }, []);
 
@@ -35,13 +34,9 @@ const HomeScreen = () => {
       <ScrollView
         style={styles.recipeContainer}
         contentContainerStyle={styles.scrollViewContent}>
-        {recipes.map((recipe, index) => (
+        {sections.map((item, index) => (
           <View key={index} style={styles.recipe}>
-            <Text style={styles.recipeTitle}>{recipe.name}</Text>
-            <Text>Section: {recipe.section}</Text>
-            <Text>Instructions: {recipe.instructions}</Text>
-            <Text>Cook Time: {recipe.cook_time} minutes</Text>
-            <Text>Ingredients: {recipe.ingredients}</Text>
+            <Text>Section: {item.section}</Text>
           </View>
         ))}
       </ScrollView>

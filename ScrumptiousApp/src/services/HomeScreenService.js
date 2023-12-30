@@ -3,10 +3,9 @@
 const BASE_URL = 'http://127.0.0.1:5000'; // URL for iOS simulator
 
 const HomeScreenService = {
-  // get home page recipes
-  getRecipes: async () => {
+  getSections: async () => {
     try {
-      const response = await fetch(`${BASE_URL}/recipes`, {
+      const response = await fetch(`${BASE_URL}/sections`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -19,7 +18,7 @@ const HomeScreenService = {
 
       return await response.json();
     } catch (error) {
-      console.error('Error during fetch operation:', error);
+      console.error('Error during fetch sections operation:', error);
       throw error;
     }
   },

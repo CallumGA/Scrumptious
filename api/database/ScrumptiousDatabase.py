@@ -1,7 +1,7 @@
 # MyFlaskApp/api/database/ScrumptiousDatabase.py
 
 from .db import db
-from .models import Recipe 
+from .models import Recipe
 
 
 class ScrumptiousDatabase:
