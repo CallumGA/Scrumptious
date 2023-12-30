@@ -1,7 +1,15 @@
 // src/screens/HomeScreen/HomeScreen.js
-
-import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  TouchableOpacity,
+  Image,
+  StatusBar,
+  SafeAreaView, // Use SafeAreaView for better spacing on iOS
+} from 'react-native';
 import HomeScreenService from '../../services/HomeScreenService';
 
 const HomeScreen = () => {
@@ -16,14 +24,25 @@ const HomeScreen = () => {
         console.error('Error fetching recipes:', error);
       }
     };
-
     fetchData();
   }, []);
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Welcome to ScrumptiousApp!</Text>
-      <ScrollView style={styles.recipeContainer}>
+    <SafeAreaView style={styles.container}>
+      <StatusBar barStyle="dark-content" />
+      <View style={styles.navbar}>
+        <Text style={styles.navTitle}>Scrumptious</Text>
+        <TouchableOpacity style={styles.hamburger}>
+          <Image
+            source={require('../../assets/menu.png')} // Replace with your image path
+            resizeMode="contain"
+            style={styles.icon}
+          />
+        </TouchableOpacity>
+      </View>
+      <ScrollView
+        style={styles.recipeContainer}
+        contentContainerStyle={styles.scrollViewContent}>
         {recipes.map((recipe, index) => (
           <View key={index} style={styles.recipe}>
             <Text style={styles.recipeTitle}>{recipe.name}</Text>
@@ -34,34 +53,86 @@ const HomeScreen = () => {
           </View>
         ))}
       </ScrollView>
-    </View>
+      <View style={styles.tabBar}>
+        <TouchableOpacity>
+          <Image
+            source={require('../../assets/search.png')}
+            resizeMode="contain"
+            style={styles.icon}
+          />
+        </TouchableOpacity>
+        <TouchableOpacity>
+          <Image
+            source={require('../../assets/home.png')}
+            resizeMode="contain"
+            style={styles.icon}
+          />
+        </TouchableOpacity>
+        <TouchableOpacity>
+          <Image
+            source={require('../../assets/home.png')}
+            resizeMode="contain"
+            style={styles.icon}
+          />
+        </TouchableOpacity>
+      </View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    backgroundColor: '#ffffff',
   },
-  title: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
+  navbar: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between', // Align title to the left, icon to the right
+    paddingHorizontal: 15,
+    height: 60,
+    backgroundColor: '#FFF',
+    borderBottomWidth: 1,
+    borderBottomColor: '#EFEFEF',
+  },
+  navTitle: {
+    fontWeight: 'bold',
+    fontSize: 18,
+  },
+  hamburger: {
+    // Adjust if needed
+  },
+  tabBar: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    height: 60,
+    backgroundColor: '#FFF',
+    borderTopWidth: 1,
+    borderTopColor: '#EFEFEF',
+    paddingBottom: 10,
+  },
+  icon: {
+    width: 30,
+    height: 30,
   },
   recipeContainer: {
-    width: '100%',
+    flex: 1,
   },
   recipe: {
     backgroundColor: '#eaeaea',
     padding: 10,
     marginTop: 10,
+    borderRadius: 8,
   },
   recipeTitle: {
     fontSize: 16,
     fontWeight: 'bold',
   },
+  scrollViewContent: {
+    paddingBottom: 70,
+  },
+  // Add any additional styles you may need
 });
 
 export default HomeScreen;
