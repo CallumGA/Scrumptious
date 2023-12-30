@@ -6,6 +6,7 @@ import {
   ScrollView,
   StatusBar,
   SafeAreaView,
+  Text,
 } from 'react-native';
 import HomeScreenService from '../../services/HomeScreenService';
 import TopNavBar from '../../components/TopNavBar'; // Import TopNavBar
