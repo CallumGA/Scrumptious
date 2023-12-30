@@ -70,7 +70,7 @@ const HomeScreen = () => {
         </TouchableOpacity>
         <TouchableOpacity>
           <Image
-            source={require('../../assets/home.png')}
+            source={require('../../assets/eat.png')}
             resizeMode="contain"
             style={styles.icon}
           />
