@@ -88,26 +88,28 @@ const styles = StyleSheet.create({
   navbar: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between', // Align title to the left, icon to the right
+    justifyContent: 'space-between',
     paddingHorizontal: 15,
     height: 60,
-    backgroundColor: '#FFF',
+    backgroundColor: '#efe4e1',
     borderBottomWidth: 1,
     borderBottomColor: '#EFEFEF',
   },
   navTitle: {
     fontWeight: 'bold',
-    fontSize: 18,
+    fontSize: 22, // Increase the font size
+    color: '#000000', // Change color to black
+    marginLeft: 10,
   },
   hamburger: {
-    // Adjust if needed
+    // If you want to change the style of the hamburger icon, do it here
   },
   tabBar: {
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
     height: 60,
-    backgroundColor: '#FFF',
+    backgroundColor: '#efe4e1',
     borderTopWidth: 1,
     borderTopColor: '#EFEFEF',
     paddingBottom: 10,
@@ -132,7 +134,6 @@ const styles = StyleSheet.create({
   scrollViewContent: {
     paddingBottom: 70,
   },
-  // Add any additional styles you may need
 });
 
 export default HomeScreen;
