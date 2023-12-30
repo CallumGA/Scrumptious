@@ -18,7 +18,8 @@ class ScrumptiousDatabase:
             sample_recipes = [
                 Recipe(name="Pancakes", instructions="Mix ingredients and cook on a griddle.", cook_time=15, ingredients="Flour, Eggs, Milk, Baking Powder", user_id=1, section="Breakfast"),
                 Recipe(name="Caesar Salad", instructions="Toss all ingredients together in a large bowl.", cook_time=10, ingredients="Romaine Lettuce, Croutons, Caesar Dressing, Parmesan Cheese", user_id=1, section="Lunch"),
-                Recipe(name="Cheesecake", instructions="Bake the mixture in a springform pan and chill.", cook_time=45, ingredients="Cream Cheese, Graham Crackers, Sugar, Eggs", user_id=1, section="Desert")
+                Recipe(name="Cheesecake", instructions="Bake the mixture in a springform pan and chill.", cook_time=45, ingredients="Cream Cheese, Graham Crackers, Sugar, Eggs", user_id=1, section="Desert"),
+                Recipe(name="Roast Beef", instructions="Heat oven to 450 degrees F", cook_time=75, ingredients="Round tip", user_id=1, section="Dinner")
             ]
             db.session.add_all(sample_recipes)
             db.session.commit()
