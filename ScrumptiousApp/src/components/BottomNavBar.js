@@ -1,8 +1,10 @@
 // src/components/BottomNavBar.js
 import React from 'react';
 import {View, StyleSheet, TouchableOpacity, Image} from 'react-native';
+import {useNavigation} from '@react-navigation/native'; // Import useNavigation
 
 const BottomNavBar = () => {
+  const navigation = useNavigation();
   return (
     <View style={styles.tabBar}>
       <TouchableOpacity>
@@ -19,7 +21,7 @@ const BottomNavBar = () => {
           style={styles.icon}
         />
       </TouchableOpacity>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate('NewRecipe')}>
         <Image
           source={require('../assets/eat.png')}
           resizeMode="contain"

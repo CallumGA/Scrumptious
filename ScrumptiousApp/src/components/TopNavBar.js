@@ -2,7 +2,7 @@
 import React from 'react';
 import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
 
-const TopNavBar = ({title, onMenuPress}) => {
+const TopNavBar = ({title, onMenuPress, navigation}) => {
   // Add the onMenuPress prop here
   return (
     <View style={styles.navbar}>
