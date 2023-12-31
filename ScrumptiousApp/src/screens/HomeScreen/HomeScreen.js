@@ -1,30 +1,34 @@
+// src/screens/HomeScreen.js
 import React, {useEffect, useState} from 'react';
 import {
   StyleSheet,
   ScrollView,
   StatusBar,
   SafeAreaView,
-  Text,
+  View,
+  Dimensions,
   TouchableOpacity,
   Image,
-  View,
-  Dimensions, // Import Dimensions to get screen dimensions
+  Text,
+  Animated, // Add Animated to your imports
 } from 'react-native';
 import HomeScreenService from '../../services/HomeScreenService';
 import TopNavBar from '../../components/TopNavBar';
 import BottomNavBar from '../../components/BottomNavBar';
 
 const images = {
-  Desert: require('../../assets/dessert.jpeg'),
+  Dessert: require('../../assets/desert.jpeg'),
   Dinner: require('../../assets/dinner.jpeg'),
   Breakfast: require('../../assets/breakfast.jpeg'),
   Lunch: require('../../assets/lunch.jpeg'),
 };
 
-const {width, height} = Dimensions.get('window'); // Get the width and height of the screen
+const {width, height} = Dimensions.get('window');
 
 const HomeScreen = () => {
   const [sections, setSections] = useState([]);
+  const [isBottomToolbarVisible, setIsBottomToolbarVisible] = useState(true);
+  const bottomBarPosition = useState(new Animated.Value(0))[0];
 
   useEffect(() => {
     const fetchData = async () => {
@@ -38,22 +42,25 @@ const HomeScreen = () => {
     fetchData();
   }, []);
 
-  const handlePressSection = section => {
-    console.log(`Section pressed: ${section}`);
+  const toggleBottomToolbar = () => {
+    // Start the animation
+    Animated.timing(bottomBarPosition, {
+      toValue: isBottomToolbarVisible ? -100 : 0,
+      duration: 300,
+      useNativeDriver: false,
+    }).start();
+
+    setIsBottomToolbarVisible(!isBottomToolbarVisible); // Update the visibility state
   };
 
   const getImageForSection = sectionName => {
-    return images[sectionName] || images.default;
+    return images[sectionName] || require('../../assets/default.jpeg');
   };
 
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="dark-content" />
-      <TopNavBar title="Scrumptious" />
-      <Image
-        source={require('../../assets/banner.jpeg')}
-        style={styles.bannerImage}
-      />
+      <TopNavBar title="Scrumptious" onMenuPress={toggleBottomToolbar} />
       <ScrollView
         style={styles.scrollView}
         contentContainerStyle={styles.scrollViewContent}>
@@ -61,7 +68,7 @@ const HomeScreen = () => {
           <TouchableOpacity
             key={index}
             style={styles.sectionCard}
-            onPress={() => handlePressSection(item.section)}
+            onPress={() => console.log(`Section pressed: ${item.section}`)}
             activeOpacity={0.7}>
             <View style={styles.cardContent}>
               <Image
@@ -73,16 +80,23 @@ const HomeScreen = () => {
           </TouchableOpacity>
         ))}
       </ScrollView>
-      <BottomNavBar />
+      <Animated.View
+        style={[
+          {
+            position: 'absolute',
+            left: 0,
+            right: 0,
+            height: 100, // Adjust to your BottomNavBar's actual height
+            bottom: bottomBarPosition, // Bind animated value to the bottom property
+          },
+        ]}>
+        <BottomNavBar />
+      </Animated.View>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  cardContent: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
   container: {
     flex: 1,
     backgroundColor: '#ffffff',
@@ -94,23 +108,28 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   sectionCard: {
+    flexDirection: 'row',
+    alignItems: 'center',
     backgroundColor: '#dbe7e0',
     borderRadius: 10,
     marginVertical: 10,
     width: '90%',
-    alignSelf: 'center', // Center the card within the ScrollView
+    alignSelf: 'center',
     shadowColor: '#000',
     shadowOffset: {width: 0, height: 2},
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
-    overflow: 'hidden',
+  },
+  cardContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   sectionImage: {
-    width: 80, // Set your desired size
-    height: 80, // Set your desired size
-    borderRadius: 10, // This will round all corners
-    marginRight: 55, // Add some spacing between the image and the text
+    width: 80,
+    height: 80,
+    borderRadius: 10,
+    marginRight: 55,
   },
   sectionText: {
     fontSize: 20,
@@ -120,11 +139,13 @@ const styles = StyleSheet.create({
     marginTop: 8,
     marginBottom: 8,
   },
-  bannerImage: {
-    width: width, // Full width of the screen
-    height: height / 4, // 1/4th of the screen height
-    resizeMode: 'cover', // or 'contain' to fit the image within the width and height
+  bottomNavBarContainer: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    height: 100, // Adjust to your BottomNavBar's actual height
   },
+  // Add any additional styles you may need
 });
 
 export default HomeScreen;

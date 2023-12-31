@@ -2,11 +2,12 @@
 import React from 'react';
 import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
 
-const TopNavBar = ({title}) => {
+const TopNavBar = ({title, onMenuPress}) => {
+  // Add the onMenuPress prop here
   return (
     <View style={styles.navbar}>
       <Text style={styles.navTitle}>{title}</Text>
-      <TouchableOpacity style={styles.hamburger}>
+      <TouchableOpacity style={styles.hamburger} onPress={onMenuPress}>
         <Image
           source={require('../assets/menu.png')}
           resizeMode="contain"
@@ -32,6 +33,9 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 22,
     color: '#000000',
+  },
+  hamburger: {
+    padding: 10, // Add padding to make the touch area larger
   },
   icon: {
     width: 30,
