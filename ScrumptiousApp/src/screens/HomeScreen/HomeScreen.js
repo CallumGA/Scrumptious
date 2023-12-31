@@ -10,8 +10,9 @@ import {
   TouchableOpacity,
   Image,
   Text,
-  Animated, // Add Animated to your imports
+  Animated,
 } from 'react-native';
+
 import HomeScreenService from '../../services/HomeScreenService';
 import TopNavBar from '../../components/TopNavBar';
 import BottomNavBar from '../../components/BottomNavBar';
@@ -28,7 +29,7 @@ const {width, height} = Dimensions.get('window');
 const HomeScreen = () => {
   const [sections, setSections] = useState([]);
   const [isBottomToolbarVisible, setIsBottomToolbarVisible] = useState(true);
-  const bottomBarPosition = useState(new Animated.Value(0))[0];
+  const bottomBarPosition = useState(new Animated.Value(0))[0]; // Initialize Animated.Value
 
   useEffect(() => {
     const fetchData = async () => {
@@ -43,24 +44,27 @@ const HomeScreen = () => {
   }, []);
 
   const toggleBottomToolbar = () => {
-    // Start the animation
     Animated.timing(bottomBarPosition, {
       toValue: isBottomToolbarVisible ? -100 : 0,
       duration: 300,
       useNativeDriver: false,
     }).start();
 
-    setIsBottomToolbarVisible(!isBottomToolbarVisible); // Update the visibility state
+    setIsBottomToolbarVisible(!isBottomToolbarVisible);
   };
 
   const getImageForSection = sectionName => {
-    return images[sectionName] || require('../../assets/default.jpeg');
+    return images[sectionName] || require('../../assets/default.jpeg'); // Update this if you have a default image
   };
 
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="dark-content" />
       <TopNavBar title="Scrumptious" onMenuPress={toggleBottomToolbar} />
+      <Image
+        source={require('../../assets/banner.jpeg')} // Replace with your actual banner image path
+        style={{width: width, height: height / 4, resizeMode: 'cover'}} // Adjust height as per your design
+      />
       <ScrollView
         style={styles.scrollView}
         contentContainerStyle={styles.scrollViewContent}>
@@ -86,8 +90,8 @@ const HomeScreen = () => {
             position: 'absolute',
             left: 0,
             right: 0,
-            height: 100, // Adjust to your BottomNavBar's actual height
-            bottom: bottomBarPosition, // Bind animated value to the bottom property
+            height: 100,
+            bottom: bottomBarPosition,
           },
         ]}>
         <BottomNavBar />
