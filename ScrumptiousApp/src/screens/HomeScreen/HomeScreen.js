@@ -7,10 +7,21 @@ import {
   Text,
   TouchableOpacity,
   Image,
+  View,
+  Dimensions, // Import Dimensions to get screen dimensions
 } from 'react-native';
 import HomeScreenService from '../../services/HomeScreenService';
 import TopNavBar from '../../components/TopNavBar';
 import BottomNavBar from '../../components/BottomNavBar';
+
+const images = {
+  Desert: require('../../assets/dessert.jpeg'),
+  Dinner: require('../../assets/dinner.jpeg'),
+  Breakfast: require('../../assets/breakfast.jpeg'),
+  Lunch: require('../../assets/lunch.jpeg'),
+};
+
+const {width, height} = Dimensions.get('window'); // Get the width and height of the screen
 
 const HomeScreen = () => {
   const [sections, setSections] = useState([]);
@@ -28,14 +39,21 @@ const HomeScreen = () => {
   }, []);
 
   const handlePressSection = section => {
-    // Placeholder for handling button press, replace with your navigation logic
     console.log(`Section pressed: ${section}`);
+  };
+
+  const getImageForSection = sectionName => {
+    return images[sectionName] || images.default;
   };
 
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="dark-content" />
       <TopNavBar title="Scrumptious" />
+      <Image
+        source={require('../../assets/banner.jpeg')}
+        style={styles.bannerImage}
+      />
       <ScrollView
         style={styles.scrollView}
         contentContainerStyle={styles.scrollViewContent}>
@@ -43,14 +61,15 @@ const HomeScreen = () => {
           <TouchableOpacity
             key={index}
             style={styles.sectionCard}
-            onPress={() => handlePressSection(item.section)} // Handle press event
-            activeOpacity={0.7} // Optional: Feedback opacity on press
-          >
-            {/*<Image*/}
-            {/*  source={{uri: 'path-to-your-image'}} // Replace with your image URI*/}
-            {/*  style={styles.sectionImage}*/}
-            {/*/>*/}
-            <Text style={styles.sectionText}>{item.section}</Text>
+            onPress={() => handlePressSection(item.section)}
+            activeOpacity={0.7}>
+            <View style={styles.cardContent}>
+              <Image
+                source={getImageForSection(item.section)}
+                style={styles.sectionImage}
+              />
+              <Text style={styles.sectionText}>{item.section}</Text>
+            </View>
           </TouchableOpacity>
         ))}
       </ScrollView>
@@ -60,6 +79,10 @@ const HomeScreen = () => {
 };
 
 const styles = StyleSheet.create({
+  cardContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
   container: {
     flex: 1,
     backgroundColor: '#ffffff',
@@ -84,9 +107,10 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   sectionImage: {
-    width: '100%',
-    height: 200,
-    resizeMode: 'cover',
+    width: 80, // Set your desired size
+    height: 80, // Set your desired size
+    borderRadius: 10, // This will round all corners
+    marginRight: 55, // Add some spacing between the image and the text
   },
   sectionText: {
     fontSize: 20,
@@ -96,7 +120,11 @@ const styles = StyleSheet.create({
     marginTop: 8,
     marginBottom: 8,
   },
-  // Add any additional styles you may need
+  bannerImage: {
+    width: width, // Full width of the screen
+    height: height / 4, // 1/4th of the screen height
+    resizeMode: 'cover', // or 'contain' to fit the image within the width and height
+  },
 });
 
 export default HomeScreen;
