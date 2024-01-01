@@ -1,20 +1,20 @@
-// src/components/BottomNavBar.js
 import React from 'react';
 import {View, StyleSheet, TouchableOpacity, Image} from 'react-native';
-import {useNavigation} from '@react-navigation/native'; // Import useNavigation
+import {useNavigation} from '@react-navigation/native';
 
 const BottomNavBar = () => {
   const navigation = useNavigation();
+
   return (
     <View style={styles.tabBar}>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate('Search')}>
         <Image
           source={require('../assets/search.png')}
           resizeMode="contain"
           style={styles.icon}
         />
       </TouchableOpacity>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate('Home')}>
         <Image
           source={require('../assets/home.png')}
           resizeMode="contain"

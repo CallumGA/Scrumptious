@@ -1,4 +1,3 @@
-// src/screens/NewRecipeService.js
 import React, {useState} from 'react';
 import {
   StyleSheet,
@@ -10,6 +9,7 @@ import {
   StatusBar,
   Image,
   Switch,
+  Animated, // Import Animated
 } from 'react-native';
 import TopNavBar from '../../components/TopNavBar';
 import BottomNavBar from '../../components/BottomNavBar';
@@ -19,23 +19,35 @@ const NewRecipe = () => {
   const [saveToggle, setSaveToggle] = useState(false);
   const [interactiveModeToggle, setInteractiveModeToggle] = useState(false);
   const [readerModeToggle, setReaderModeToggle] = useState(false);
+  const [isBottomToolbarVisible, setIsBottomToolbarVisible] = useState(true); // State to track visibility
+  const bottomBarPosition = useState(new Animated.Value(0))[0]; // Initialize Animated.Value
 
   const renderToggle = (value, onValueChange, label) => (
     <View style={styles.toggleRow}>
       <Text style={styles.optionText}>{label}</Text>
       <Switch
-        trackColor={{false: '#FFFFFF', true: '#FFFFFF'}} // White background for both on and off states
-        thumbColor={value ? '#000000' : '#f4f3f4'} // Black thumb when on, light color when off
+        trackColor={{false: '#FFFFFF', true: '#FFFFFF'}}
+        thumbColor={value ? '#000000' : '#f4f3f4'}
         onValueChange={onValueChange}
         value={value}
       />
     </View>
   );
 
+  const toggleBottomToolbar = () => {
+    Animated.timing(bottomBarPosition, {
+      toValue: isBottomToolbarVisible ? -100 : 0, // Adjust this value according to the actual height of your BottomNavBar
+      duration: 300,
+      useNativeDriver: false,
+    }).start();
+
+    setIsBottomToolbarVisible(!isBottomToolbarVisible);
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="dark-content" />
-      <TopNavBar title="Scrumptious" />
+      <TopNavBar title="Scrumptious" onMenuPress={toggleBottomToolbar} />
       <View style={styles.mainContent}>
         <View style={styles.content}>
           <Text style={styles.header}>RECIPE URL</Text>
@@ -75,7 +87,15 @@ const NewRecipe = () => {
           </TouchableOpacity>
         </View>
       </View>
-      <BottomNavBar />
+      <Animated.View
+        style={[
+          styles.bottomNavBarContainer,
+          {
+            bottom: bottomBarPosition, // Attach the animated value
+          },
+        ]}>
+        <BottomNavBar />
+      </Animated.View>
     </SafeAreaView>
   );
 };
@@ -108,7 +128,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginHorizontal: 20,
     marginTop: 20,
-    marginBottom: 30,
+    marginBottom: 100,
     backgroundColor: '#FAF9F6',
   },
   input: {
@@ -137,6 +157,13 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '500',
   },
+  bottomNavBarContainer: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    height: 100, // Adjust to your BottomNavBar's actual height
+  },
+  // ... any additional styles you may need
 });
 
 export default NewRecipe;
