@@ -9,8 +9,9 @@ import {
   StatusBar,
   Image,
   Switch,
-  Animated, // Import Animated
+  Animated,
 } from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 import TopNavBar from '../../components/TopNavBar';
 import BottomNavBar from '../../components/BottomNavBar';
 
@@ -19,8 +20,9 @@ const NewRecipe = () => {
   const [saveToggle, setSaveToggle] = useState(false);
   const [interactiveModeToggle, setInteractiveModeToggle] = useState(false);
   const [readerModeToggle, setReaderModeToggle] = useState(false);
-  const [isBottomToolbarVisible, setIsBottomToolbarVisible] = useState(true); // State to track visibility
-  const bottomBarPosition = useState(new Animated.Value(0))[0]; // Initialize Animated.Value
+  const [isBottomToolbarVisible, setIsBottomToolbarVisible] = useState(true);
+  const bottomBarPosition = useState(new Animated.Value(0))[0];
+  const navigation = useNavigation(); // Hook for navigation
 
   const renderToggle = (value, onValueChange, label) => (
     <View style={styles.toggleRow}>
@@ -36,7 +38,7 @@ const NewRecipe = () => {
 
   const toggleBottomToolbar = () => {
     Animated.timing(bottomBarPosition, {
-      toValue: isBottomToolbarVisible ? -100 : 0, // Adjust this value according to the actual height of your BottomNavBar
+      toValue: isBottomToolbarVisible ? -100 : 0,
       duration: 300,
       useNativeDriver: false,
     }).start();
@@ -51,22 +53,16 @@ const NewRecipe = () => {
       <View style={styles.mainContent}>
         <View style={styles.content}>
           <Text style={styles.header}>RECIPE URL</Text>
-          {renderToggle(saveToggle, setSaveToggle, 'Save', '#dbe7e0')}
+          {renderToggle(saveToggle, setSaveToggle, 'Save')}
           {renderToggle(
             interactiveModeToggle,
             setInteractiveModeToggle,
             'Interactive Mode',
-            '#dbe7e0',
           )}
-          {renderToggle(
-            readerModeToggle,
-            setReaderModeToggle,
-            'Reader Mode',
-            '#dbe7e0',
-          )}
+          {renderToggle(readerModeToggle, setReaderModeToggle, 'Reader Mode')}
           <Text>
             Enter the URL of the recipe you want to parse. Ensure the URL is to
-            the recipes main page. You also must ensure the recipe site is
+            the recipe's main page. You also must ensure the recipe site is
             supported by this application.
           </Text>
         </View>
@@ -79,7 +75,10 @@ const NewRecipe = () => {
             placeholder="https://yummly.com/lasagna...."
             placeholderTextColor="#888"
           />
-          <TouchableOpacity style={styles.addButton}>
+          <TouchableOpacity
+            style={styles.addButton}
+            onPress={() => navigation.navigate('RecipeLanding')} // Navigate to RecipeLanding when arrow is pressed
+          >
             <Image
               source={require('../../assets/arrow.png')}
               style={styles.icon}
@@ -91,7 +90,7 @@ const NewRecipe = () => {
         style={[
           styles.bottomNavBarContainer,
           {
-            bottom: bottomBarPosition, // Attach the animated value
+            bottom: bottomBarPosition,
           },
         ]}>
         <BottomNavBar />
