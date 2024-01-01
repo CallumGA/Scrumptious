@@ -9,19 +9,56 @@ import {
   SafeAreaView,
   StatusBar,
   Image,
+  Switch,
 } from 'react-native';
 import TopNavBar from '../../components/TopNavBar';
 import BottomNavBar from '../../components/BottomNavBar';
 
 const NewRecipe = () => {
   const [url, setUrl] = useState('');
+  const [saveToggle, setSaveToggle] = useState(false);
+  const [interactiveModeToggle, setInteractiveModeToggle] = useState(false);
+  const [readerModeToggle, setReaderModeToggle] = useState(false);
+
+  const renderToggle = (value, onValueChange, label) => (
+    <View style={styles.toggleRow}>
+      <Text style={styles.optionText}>{label}</Text>
+      <Switch
+        trackColor={{false: '#FFFFFF', true: '#FFFFFF'}} // White background for both on and off states
+        thumbColor={value ? '#000000' : '#f4f3f4'} // Black thumb when on, light color when off
+        onValueChange={onValueChange}
+        value={value}
+      />
+    </View>
+  );
 
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="dark-content" />
       <TopNavBar title="Scrumptious" />
-      <View style={styles.content}>
-        <Text style={styles.header}>RECIPE URL</Text>
+      <View style={styles.mainContent}>
+        <View style={styles.content}>
+          <Text style={styles.header}>RECIPE URL</Text>
+          {renderToggle(saveToggle, setSaveToggle, 'Save', '#dbe7e0')}
+          {renderToggle(
+            interactiveModeToggle,
+            setInteractiveModeToggle,
+            'Interactive Mode',
+            '#dbe7e0',
+          )}
+          {renderToggle(
+            readerModeToggle,
+            setReaderModeToggle,
+            'Reader Mode',
+            '#dbe7e0',
+          )}
+          <Text>
+            Enter the URL of the recipe you want to parse. Ensure the URL is to
+            the recipes main page. You also must ensure the recipe site is
+            supported by this application.
+          </Text>
+        </View>
+
         <View style={styles.inputContainer}>
           <TextInput
             style={styles.input}
@@ -46,29 +83,38 @@ const NewRecipe = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FAF9F6',
+    backgroundColor: '#dbe7e0',
+  },
+  mainContent: {
+    flex: 1, // Ensures content takes all available space between header and footer
+    justifyContent: 'space-between', // Pushes children to start and end of container
   },
   content: {
-    flex: 1,
-    padding: 20,
+    paddingHorizontal: 20,
+    paddingTop: 20,
   },
   header: {
     fontSize: 24,
     fontWeight: '600',
-    marginVertical: 20,
+    textAlign: 'center', // Centers the header text
+    marginBottom: 40, // Space between header and toggles
   },
   inputContainer: {
     flexDirection: 'row',
-    borderWidth: 1,
+    borderWidth: 3,
     borderColor: '#ddd',
     borderRadius: 25,
     paddingHorizontal: 15,
     alignItems: 'center',
-    marginBottom: 20,
+    marginHorizontal: 20,
+    marginTop: 20,
+    marginBottom: 30,
+    backgroundColor: '#FAF9F6',
   },
   input: {
     flex: 1,
     height: 50,
+    backgroundColor: '#FAF9F6',
   },
   addButton: {
     padding: 10,
@@ -77,25 +123,20 @@ const styles = StyleSheet.create({
     width: 20,
     height: 20,
   },
-  buttonContainer: {
-    // If your buttons are vertically aligned in the design
-  },
-  optionButton: {
+  toggleRow: {
     flexDirection: 'row',
+    justifyContent: 'space-between',
     alignItems: 'center',
-    paddingVertical: 10,
-    marginBottom: 10,
-  },
-  optionIcon: {
-    width: 24,
-    height: 24,
-    marginRight: 10,
+    paddingVertical: 20, // More space around the toggle
+    borderBottomWidth: 1,
+    borderBottomColor: '#ddd',
+    marginHorizontal: 20, // Space from the sides of the screen
+    marginBottom: 20, // More space between individual toggles
   },
   optionText: {
     fontSize: 18,
     fontWeight: '500',
   },
-  // Add any additional styles you may need
 });
 
 export default NewRecipe;
