@@ -1,4 +1,3 @@
-// src/screens/HomeScreen.js
 import React, {useEffect, useState} from 'react';
 import {
   StyleSheet,
@@ -54,43 +53,42 @@ const HomeScreen = () => {
   };
 
   const getImageForSection = sectionName => {
-    return images[sectionName] || require('../../assets/default.jpeg'); // Update this if you have a default image
+    return images[sectionName] || require('../../assets/default.jpeg');
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={styles.safeArea}>
       <StatusBar barStyle="dark-content" />
-      <TopNavBar title="Scrumptious" onMenuPress={toggleBottomToolbar} />
-      <Image
-        source={require('../../assets/banner.jpeg')} // Replace with your actual banner image path
-        style={{width: width, height: height / 4, resizeMode: 'cover'}} // Adjust height as per your design
-      />
-      <ScrollView
-        style={styles.scrollView}
-        contentContainerStyle={styles.scrollViewContent}>
-        {sections.map((item, index) => (
-          <TouchableOpacity
-            key={index}
-            style={styles.sectionCard}
-            onPress={() => console.log(`Section pressed: ${item.section}`)}
-            activeOpacity={0.7}>
-            <View style={styles.cardContent}>
-              <Image
-                source={getImageForSection(item.section)}
-                style={styles.sectionImage}
-              />
-              <Text style={styles.sectionText}>{item.section}</Text>
-            </View>
-          </TouchableOpacity>
-        ))}
-      </ScrollView>
+      <View style={styles.container}>
+        <TopNavBar title="Scrumptious" onMenuPress={toggleBottomToolbar} />
+        <Image
+          source={require('../../assets/banner.jpeg')}
+          style={{width: width, height: height / 4, resizeMode: 'cover'}}
+        />
+        <ScrollView
+          style={styles.scrollView}
+          contentContainerStyle={styles.scrollViewContent}>
+          {sections.map((item, index) => (
+            <TouchableOpacity
+              key={index}
+              style={styles.sectionCard}
+              onPress={() => console.log(`Section pressed: ${item.section}`)}
+              activeOpacity={0.7}>
+              <View style={styles.cardContent}>
+                <Image
+                  source={getImageForSection(item.section)}
+                  style={styles.sectionImage}
+                />
+                <Text style={styles.sectionText}>{item.section}</Text>
+              </View>
+            </TouchableOpacity>
+          ))}
+        </ScrollView>
+      </View>
       <Animated.View
         style={[
+          styles.bottomNavBarContainer,
           {
-            position: 'absolute',
-            left: 0,
-            right: 0,
-            height: 100,
             bottom: bottomBarPosition,
           },
         ]}>
@@ -101,9 +99,13 @@ const HomeScreen = () => {
 };
 
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: '#efe4e1', // The color for the safe area
+  },
   container: {
     flex: 1,
-    backgroundColor: '#ffffff',
+    backgroundColor: '#ffffff', // The color for the main content area
   },
   scrollView: {
     flex: 1,
@@ -147,9 +149,8 @@ const styles = StyleSheet.create({
     position: 'absolute',
     left: 0,
     right: 0,
-    height: 100, // Adjust to your BottomNavBar's actual height
+    height: 70,
   },
-  // Add any additional styles you may need
 });
 
 export default HomeScreen;

@@ -22,7 +22,7 @@ const NewRecipe = () => {
   const [readerModeToggle, setReaderModeToggle] = useState(false);
   const [isBottomToolbarVisible, setIsBottomToolbarVisible] = useState(true);
   const bottomBarPosition = useState(new Animated.Value(0))[0];
-  const navigation = useNavigation(); // Hook for navigation
+  const navigation = useNavigation();
 
   const renderToggle = (value, onValueChange, label) => (
     <View style={styles.toggleRow}>
@@ -47,66 +47,72 @@ const NewRecipe = () => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={styles.safeArea}>
       <StatusBar barStyle="dark-content" />
-      <TopNavBar title="Scrumptious" onMenuPress={toggleBottomToolbar} />
-      <View style={styles.mainContent}>
-        <View style={styles.content}>
-          <Text style={styles.header}>RECIPE URL</Text>
-          {renderToggle(saveToggle, setSaveToggle, 'Save')}
-          {renderToggle(
-            interactiveModeToggle,
-            setInteractiveModeToggle,
-            'Interactive Mode',
-          )}
-          {renderToggle(readerModeToggle, setReaderModeToggle, 'Reader Mode')}
-          <Text>
-            Enter the URL of the recipe you want to parse. Ensure the URL is to
-            the recipe's main page. You also must ensure the recipe site is
-            supported by this application.
-          </Text>
-        </View>
+      <View style={styles.container}>
+        <TopNavBar title="Scrumptious" onMenuPress={toggleBottomToolbar} />
+        <View style={styles.mainContent}>
+          <View style={styles.content}>
+            <Text style={styles.header}>RECIPE URL</Text>
+            {renderToggle(saveToggle, setSaveToggle, 'Save')}
+            {renderToggle(
+              interactiveModeToggle,
+              setInteractiveModeToggle,
+              'Interactive Mode',
+            )}
+            {renderToggle(readerModeToggle, setReaderModeToggle, 'Reader Mode')}
+            <Text>
+              Enter the URL of the recipe you want to parse. Ensure the URL is
+              to the recipe's main page. You also must ensure the recipe site is
+              supported by this application.
+            </Text>
+          </View>
 
-        <View style={styles.inputContainer}>
-          <TextInput
-            style={styles.input}
-            onChangeText={setUrl}
-            value={url}
-            placeholder="https://yummly.com/lasagna...."
-            placeholderTextColor="#888"
-          />
-          <TouchableOpacity
-            style={styles.addButton}
-            onPress={() => navigation.navigate('RecipeLanding')} // Navigate to RecipeLanding when arrow is pressed
-          >
-            <Image
-              source={require('../../assets/arrow.png')}
-              style={styles.icon}
+          <View style={styles.inputContainer}>
+            <TextInput
+              style={styles.input}
+              onChangeText={setUrl}
+              value={url}
+              placeholder="https://yummly.com/chocolate-cookies...."
+              placeholderTextColor="#888"
             />
-          </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.addButton}
+              onPress={() => navigation.navigate('RecipeLanding')}>
+              <Image
+                source={require('../../assets/arrow.png')}
+                style={styles.icon}
+              />
+            </TouchableOpacity>
+          </View>
         </View>
+        <Animated.View
+          style={[
+            styles.bottomNavBarContainer,
+            {
+              bottom: bottomBarPosition,
+            },
+          ]}>
+          <BottomNavBar />
+        </Animated.View>
       </View>
-      <Animated.View
-        style={[
-          styles.bottomNavBarContainer,
-          {
-            bottom: bottomBarPosition,
-          },
-        ]}>
-        <BottomNavBar />
-      </Animated.View>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: '#efe4e1', // Background color for the safe area
+  },
   container: {
     flex: 1,
-    backgroundColor: '#dbe7e0',
+    backgroundColor: '#ffffff', // Background color for the main content
   },
   mainContent: {
-    flex: 1, // Ensures content takes all available space between header and footer
-    justifyContent: 'space-between', // Pushes children to start and end of container
+    backgroundColor: '#dbe7e0',
+    flex: 1,
+    justifyContent: 'space-between',
   },
   content: {
     paddingHorizontal: 20,
@@ -160,7 +166,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     left: 0,
     right: 0,
-    height: 100, // Adjust to your BottomNavBar's actual height
+    height: 40,
   },
   // ... any additional styles you may need
 });
