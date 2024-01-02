@@ -168,7 +168,6 @@ const styles = StyleSheet.create({
     right: 0,
     height: 40,
   },
-  // ... any additional styles you may need
 });
 
 export default NewRecipe;

@@ -19,14 +19,55 @@ const {width} = Dimensions.get('window');
 const RecipeLanding = () => {
   const [isBottomToolbarVisible, setIsBottomToolbarVisible] = useState(true);
   const bottomBarPosition = useState(new Animated.Value(0))[0];
+  const ReaderButton = () => (
+    <TouchableOpacity
+      style={styles.readerButton}
+      onPress={() => {
+        /* handle reader mode activation */
+      }}>
+      <Text style={styles.readerButtonText}>Reader</Text>
+    </TouchableOpacity>
+  );
 
-  const ingredients = [
-    {amount: '1 cup', name: 'peanut butter'},
-    {amount: '1 cup', name: 'coconut sugar'},
-    {amount: '2 tsp', name: 'chocolate sauce'},
-    {amount: '4 tsp', name: 'corn flour'},
-    {amount: '1', name: 'egg'},
-  ];
+  const [ingredients, setIngredients] = useState([
+    {baseAmount: 1, unit: 'cup', name: 'peanut butter'},
+    {baseAmount: 1, unit: 'cup', name: 'coconut sugar'},
+    {baseAmount: 2, unit: 'tsp', name: 'chocolate sauce'},
+    {baseAmount: 4, unit: 'tsp', name: 'corn flour'},
+    {baseAmount: 1, unit: '', name: 'egg'},
+  ]);
+
+  // State for portion count
+  const [portion, setPortion] = useState(1);
+
+  // Function to update the ingredient amounts based on the portion
+  const updateIngredientsForPortion = newPortion => {
+    const updatedIngredients = ingredients.map(ingredient => {
+      const newAmount = ingredient.baseAmount * newPortion;
+      return {...ingredient, amount: newAmount};
+    });
+    setIngredients(updatedIngredients);
+  };
+
+  // Function to handle portion increase
+  const increasePortion = () => {
+    if (portion < 2) {
+      // Assuming the maximum portion is 2
+      const newPortion = portion + 1;
+      setPortion(newPortion);
+      updateIngredientsForPortion(newPortion);
+    }
+  };
+
+  // Function to handle portion decrease
+  const decreasePortion = () => {
+    if (portion > 1) {
+      // Assuming the minimum portion is 1
+      const newPortion = portion - 1;
+      setPortion(newPortion);
+      updateIngredientsForPortion(newPortion);
+    }
+  };
 
   const toggleBottomToolbar = () => {
     Animated.timing(bottomBarPosition, {
@@ -70,20 +111,37 @@ const RecipeLanding = () => {
         <ScrollView style={styles.scrollView}>
           <View style={styles.ingredientSection}>
             <Text style={styles.ingredientTitle}>Ingredients</Text>
+            <View style={styles.portionContainer}>
+              <TouchableOpacity
+                onPress={decreasePortion}
+                style={styles.portionButton}>
+                <Text style={styles.portionButtonText}>-</Text>
+              </TouchableOpacity>
+              <Text style={styles.portionCount}>{portion}</Text>
+              <TouchableOpacity
+                onPress={increasePortion}
+                style={styles.portionButton}>
+                <Text style={styles.portionButtonText}>+</Text>
+              </TouchableOpacity>
+            </View>
             <View style={styles.ingredientGrid}>
               {ingredients.map((item, index) => (
                 <View key={index} style={styles.ingredientItem}>
                   <View style={styles.amountBubble}>
-                    <Text style={styles.amountText}>{item.amount}</Text>
+                    <Text style={styles.amountText}>
+                      {portion === 1
+                        ? item.baseAmount + ' ' + item.unit
+                        : item.amount + ' ' + item.unit}
+                    </Text>
                   </View>
                   <Text style={styles.ingredientName}>{item.name}</Text>
                 </View>
               ))}
             </View>
           </View>
-          {/* Additional content */}
         </ScrollView>
       </View>
+      <ReaderButton />
       <Animated.View
         style={[
           styles.bottomNavBarContainer,
@@ -108,7 +166,7 @@ const styles = StyleSheet.create({
   },
   imageContainer: {
     width: width,
-    height: 300, // Adjust the height as necessary
+    height: 250, // Adjust the height as necessary
     position: 'relative',
   },
   recipeImage: {
@@ -183,24 +241,73 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     width: '50%', // Each item takes up half the width of the container
   },
+  ingredientName: {
+    fontSize: 16,
+    flexShrink: 1, // Allows text to shrink and wrap if necessary
+    marginLeft: 5, // Adds space between the amount bubble and the ingredient name
+  },
+  readerButton: {
+    backgroundColor: '#dbe7e0',
+    borderRadius: 20,
+    padding: 10,
+    width: 100,
+    position: 'absolute',
+    bottom: 100,
+    alignSelf: 'center',
+  },
+  readerButtonText: {
+    color: 'black',
+    textAlign: 'center',
+  },
+  portionToggle: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    padding: 8,
+    marginRight: 20,
+  },
+  portionText: {
+    color: 'black',
+    fontWeight: 'bold',
+  },
+  // Restore your ingredient bubble styles here
   amountBubble: {
     backgroundColor: 'white',
     borderRadius: 15,
     padding: 5,
     paddingHorizontal: 8,
     margin: 5,
-    // Align your shadow styles as needed
+    shadowColor: '#000',
+    shadowOffset: {width: 0, height: 1},
+    shadowOpacity: 0.2,
+    shadowRadius: 1,
+    elevation: 2,
   },
   amountText: {
     fontSize: 14,
-    // Align your text styles as needed
+    textAlign: 'center',
   },
-  ingredientName: {
-    fontSize: 16,
-    flexShrink: 1, // Allows text to shrink and wrap if necessary
-    marginLeft: 5, // Adds space between the amount bubble and the ingredient name
+  portionContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 10,
   },
-  // Add other styles for the buttons, toggles, and ingredients list
+  portionButton: {
+    backgroundColor: '#ddd',
+    padding: 5,
+    marginHorizontal: 10,
+    borderRadius: 5,
+  },
+  portionButtonText: {
+    fontSize: 18,
+    color: '#333',
+  },
+  portionCount: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#333',
+  },
 });
 
 export default RecipeLanding;
