@@ -40,8 +40,7 @@ const RecipeLanding = () => {
           style={styles.recipeImage}
         />
         <View style={styles.recipeTitleContainer}>
-          <Text style={styles.recipeTitle}>Chocolate cookies</Text>
-          <Text style={styles.activeTime}>Active: 15 min</Text>
+          <Text style={styles.ingredientTtitle}>Ingredients</Text>
         </View>
         {/* Ingredients list and other content */}
       </ScrollView>
@@ -85,14 +84,14 @@ const styles = StyleSheet.create({
   },
   recipeTitleContainer: {
     padding: 20,
-    backgroundColor: '#dbe7e0',
+    backgroundColor: '#efe4e1',
   },
   recipeTitle: {
     fontSize: 24,
     fontWeight: 'bold',
     color: '#5d4037',
   },
-  activeTime: {
+  ingredientTtitle: {
     fontSize: 16,
     fontWeight: 'bold',
     color: '#5d4037',
