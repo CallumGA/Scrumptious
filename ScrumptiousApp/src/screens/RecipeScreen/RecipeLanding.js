@@ -110,19 +110,23 @@ const RecipeLanding = () => {
         </View>
         <ScrollView style={styles.scrollView}>
           <View style={styles.ingredientSection}>
-            <Text style={styles.ingredientTitle}>Ingredients</Text>
-            <View style={styles.portionContainer}>
-              <TouchableOpacity
-                onPress={decreasePortion}
-                style={styles.portionButton}>
-                <Text style={styles.portionButtonText}>-</Text>
-              </TouchableOpacity>
-              <Text style={styles.portionCount}>{portion}</Text>
-              <TouchableOpacity
-                onPress={increasePortion}
-                style={styles.portionButton}>
-                <Text style={styles.portionButtonText}>+</Text>
-              </TouchableOpacity>
+            <View style={styles.sectionHeader}>
+              <Text style={styles.ingredientTitle}>Ingredients</Text>
+              <View style={styles.portionContainer}>
+                <Text>Portions</Text>
+
+                <TouchableOpacity
+                  onPress={decreasePortion}
+                  style={styles.portionButton}>
+                  <Text style={styles.portionButtonText}>-</Text>
+                </TouchableOpacity>
+                <Text style={styles.portionCount}>{portion}</Text>
+                <TouchableOpacity
+                  onPress={increasePortion}
+                  style={styles.portionButton}>
+                  <Text style={styles.portionButtonText}>+</Text>
+                </TouchableOpacity>
+              </View>
             </View>
             <View style={styles.ingredientGrid}>
               {ingredients.map((item, index) => (
@@ -307,6 +311,12 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     color: '#333',
+  },
+  sectionHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 20, // Adjust as needed
   },
 });
 
