@@ -17,20 +17,10 @@ import {useNavigation} from '@react-navigation/native';
 
 const {width} = Dimensions.get('window');
 
-const RecipeLanding = () => {
+const IntertactiveRecipe = () => {
   const [isBottomToolbarVisible, setIsBottomToolbarVisible] = useState(true);
   const bottomBarPosition = useState(new Animated.Value(0))[0];
   const navigation = useNavigation();
-
-  const ReaderButton = () => (
-    <TouchableOpacity
-      style={styles.readerButton}
-      onPress={() => {
-        /* handle reader mode activation */
-      }}>
-      <Text style={styles.readerButtonText}>Reader</Text>
-    </TouchableOpacity>
-  );
 
   const [ingredients, setIngredients] = useState([
     {baseAmount: 1, unit: 'cup', name: 'peanut butter'},
@@ -146,12 +136,6 @@ const RecipeLanding = () => {
             </View>
           </View>
         </ScrollView>
-        <TouchableOpacity
-          style={styles.startCookingButton}
-          onPress={() => navigation.navigate('InteractiveRecipe')}>
-          <Text style={styles.startCookingButtonText}>Start Cooking</Text>
-        </TouchableOpacity>
-        <ReaderButton />
       </View>
       <Animated.View
         style={[
@@ -326,20 +310,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 5,
   },
-  startCookingButton: {
-    backgroundColor: '#4CAF50', // A green color for visibility
-    padding: 15,
-    borderRadius: 25,
-    alignItems: 'center',
-    alignSelf: 'center', // Align button to the center
-    width: '60%', // Set the width to 60% of the parent container
-    marginBottom: 20,
-  },
-  startCookingButtonText: {
-    color: 'white',
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
 });
 
-export default RecipeLanding;
+export default IntertactiveRecipe;
