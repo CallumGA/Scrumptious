@@ -114,7 +114,6 @@ const RecipeLanding = () => {
               <Text style={styles.ingredientTitle}>Ingredients</Text>
               <View style={styles.portionContainer}>
                 <Text>Portions</Text>
-
                 <TouchableOpacity
                   onPress={decreasePortion}
                   style={styles.portionButton}>
@@ -144,8 +143,15 @@ const RecipeLanding = () => {
             </View>
           </View>
         </ScrollView>
+        <TouchableOpacity
+          style={styles.startCookingButton}
+          onPress={() => {
+            /* Logic to start interactive recipe */
+          }}>
+          <Text style={styles.startCookingButtonText}>Start Cooking</Text>
+        </TouchableOpacity>
+        <ReaderButton />
       </View>
-      <ReaderButton />
       <Animated.View
         style={[
           styles.bottomNavBarContainer,
@@ -252,16 +258,17 @@ const styles = StyleSheet.create({
   },
   readerButton: {
     backgroundColor: '#dbe7e0',
-    borderRadius: 20,
-    padding: 10,
-    width: 100,
-    position: 'absolute',
-    bottom: 100,
-    alignSelf: 'center',
+    padding: 15,
+    borderRadius: 25,
+    alignItems: 'center',
+    alignSelf: 'center', // Align button to the center
+    width: '60%', // Set the width to 60% of the parent container
+    marginBottom: 90,
   },
   readerButtonText: {
     color: 'black',
-    textAlign: 'center',
+    fontSize: 18,
+    fontWeight: 'bold',
   },
   portionToggle: {
     flexDirection: 'row',
@@ -316,7 +323,21 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 20, // Adjust as needed
+    marginBottom: 5,
+  },
+  startCookingButton: {
+    backgroundColor: '#4CAF50', // A green color for visibility
+    padding: 15,
+    borderRadius: 25,
+    alignItems: 'center',
+    alignSelf: 'center', // Align button to the center
+    width: '60%', // Set the width to 60% of the parent container
+    marginBottom: 20,
+  },
+  startCookingButtonText: {
+    color: 'white',
+    fontSize: 18,
+    fontWeight: 'bold',
   },
 });
 
