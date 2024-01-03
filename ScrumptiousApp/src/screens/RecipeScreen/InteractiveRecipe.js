@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   Text,
@@ -14,6 +14,7 @@ import {
 import TopNavBar from '../../components/TopNavBar';
 import BottomNavBar from '../../components/BottomNavBar';
 import {useNavigation} from '@react-navigation/native';
+import Tts from 'react-native-tts';
 
 const {width} = Dimensions.get('window');
 
@@ -30,9 +31,53 @@ const IntertactiveRecipe = () => {
     {baseAmount: 1, unit: '', name: 'egg'},
   ]);
 
+  const RecipeStep = ({stepNumber, stepText}) => {
+    const speak = () => {
+      Tts.speak(stepText);
+    };
+
+    return (
+      <View style={styles.stepContainer}>
+        <View style={styles.stepNumberBubble}>
+          <Text style={styles.stepNumberText}>{stepNumber}</Text>
+        </View>
+        <Text style={styles.stepText}>{stepText}</Text>
+        <TouchableOpacity onPress={speak} style={styles.soundIconButton}>
+          <Image
+            source={require('../../assets/sound-icon.png')}
+            style={styles.soundIcon}
+          />
+        </TouchableOpacity>
+      </View>
+    );
+  };
+
   // State for portion count
   const [portion, setPortion] = useState(1);
+  const [secondsRemaining, setSecondsRemaining] = useState(20 * 60); // 20 minutes in seconds
 
+  useEffect(() => {
+    // Start the timer on component mount
+    const timerId = setInterval(() => {
+      setSecondsRemaining(prevSeconds => {
+        if (prevSeconds > 0) {
+          return prevSeconds - 1;
+        }
+        clearInterval(timerId);
+        return 0; // Stop at zero
+      });
+    }, 1000); // Decrement every second
+
+    // Cleanup the interval on component unmount
+    return () => clearInterval(timerId);
+  }, []);
+
+  // Format seconds into minutes and seconds
+  const formatTime = () => {
+    const minutes = Math.floor(secondsRemaining / 60);
+    const seconds = secondsRemaining % 60;
+    return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+  };
   // Function to update the ingredient amounts based on the portion
   const updateIngredientsForPortion = newPortion => {
     const updatedIngredients = ingredients.map(ingredient => {
@@ -135,7 +180,12 @@ const IntertactiveRecipe = () => {
               ))}
             </View>
           </View>
+          <RecipeStep
+            stepNumber="1"
+            stepText="Preheat the oven to 450 degrees."
+          />
         </ScrollView>
+        <Text style={styles.timerText}>{formatTime()}</Text>
       </View>
       <Animated.View
         style={[
@@ -266,7 +316,6 @@ const styles = StyleSheet.create({
     color: 'black',
     fontWeight: 'bold',
   },
-  // Restore your ingredient bubble styles here
   amountBubble: {
     backgroundColor: 'white',
     borderRadius: 15,
@@ -309,6 +358,50 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     marginBottom: 5,
+  },
+  timerText: {
+    fontSize: 48, // Large font size for the timer
+    textAlign: 'center',
+    fontWeight: 'bold',
+    color: '#000',
+    paddingVertical: 20, // Space above and below the timer text
+    marginBottom: 50,
+  },
+  stepContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    position: 'relative', // Added for absolute positioning of the sound icon
+  },
+  stepNumberBubble: {
+    backgroundColor: '#000', // or your desired color
+    borderRadius: 15,
+    width: 30,
+    height: 30,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 10,
+  },
+  stepNumberText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  stepText: {
+    fontSize: 16,
+    color: '#000', // or your desired color
+    flexShrink: 1,
+  },
+  soundIconButton: {
+    position: 'absolute',
+    right: 10,
+    top: '50%',
+    transform: [{translateY: -15}], // Adjust as needed for vertical centering
+  },
+  soundIcon: {
+    width: 30, // Adjust as needed
+    height: 30, // Adjust as needed
   },
 });
 
