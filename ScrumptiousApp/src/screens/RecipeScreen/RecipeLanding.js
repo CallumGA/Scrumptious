@@ -26,7 +26,7 @@ const RecipeLanding = () => {
     <TouchableOpacity
       style={styles.readerButton}
       onPress={() => navigation.navigate('ReaderScreen')}>
-      <Text style={styles.readerButtonText}>Reader</Text>
+      <Text style={styles.readerButtonText}>Reader Mode</Text>
     </TouchableOpacity>
   );
 

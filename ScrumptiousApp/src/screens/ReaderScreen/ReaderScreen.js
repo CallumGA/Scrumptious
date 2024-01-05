@@ -35,7 +35,7 @@ const ReaderScreen = () => {
     <TouchableOpacity
       style={styles.readerButton}
       onPress={() => navigation.navigate('RecipeLanding')}>
-      <Text style={styles.readerButtonText}>Interactive</Text>
+      <Text style={styles.readerButtonText}>Interactive Mode</Text>
     </TouchableOpacity>
   );
 
