@@ -25,8 +25,31 @@ const images = {
   Lunch: require('../../assets/lunch.jpeg'),
 };
 
-const {width, height} = Dimensions.get('window');
+const {width} = Dimensions.get('window');
 
+const recipes = [
+  {
+    name: 'Breakfast Muffin',
+    image: require('../../assets/breakfast-sand.jpg'),
+    description: 'Crisp juicy bacon egg breakfast sandwich.',
+  },
+  {
+    name: 'Classic Pancakes',
+    image: require('../../assets/pancake.jpg'),
+    description: 'Fluffy pancakes with syrup and butter.',
+  },
+  {
+    name: 'Fruit Salad',
+    image: require('../../assets/salad.jpg'),
+    description: 'Fresh, vibrant fruit salad.',
+  },
+  {
+    name: 'Butter Waffles',
+    image: require('../../assets/waffle.jpg'),
+    description: 'Flaky golden butter waffles with real syrup.',
+  },
+  // ... add more recipes
+];
 const RecipeList = () => {
   const [sections, setSections] = useState([]);
   const [isBottomToolbarVisible, setIsBottomToolbarVisible] = useState(true);
@@ -88,10 +111,16 @@ const RecipeList = () => {
             </TouchableOpacity>
           </View>
         )}
-        <ScrollView
-          style={styles.scrollView}
-          contentContainerStyle={styles.scrollViewContent}
-        />
+        <ScrollView style={styles.scrollView}>
+          <Text style={styles.recipeSectionTitle}>Saved Breakfast Recipes</Text>
+          {recipes.map((recipe, index) => (
+            <View key={index} style={styles.recipeCard}>
+              <Image source={recipe.image} style={styles.recipeImage} />
+              <Text style={styles.recipeName}>{recipe.name}</Text>
+              <Text style={styles.recipeDescription}>{recipe.description}</Text>
+            </View>
+          ))}
+        </ScrollView>
       </View>
       <Animated.View
         style={[
@@ -109,75 +138,48 @@ const RecipeList = () => {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: '#efe4e1', // The color for the safe area
+    backgroundColor: '#efe4e1',
   },
   container: {
     flex: 1,
-    backgroundColor: '#ffffff', // The color for the main content area
+    backgroundColor: '#ffffff',
   },
   scrollView: {
     flex: 1,
-  },
-  scrollViewContent: {
     padding: 16,
   },
-  sectionCard: {
-    flexDirection: 'row',
-    alignItems: 'center',
+  recipeCard: {
     backgroundColor: '#dbe7e0',
     borderRadius: 10,
-    marginVertical: 10,
-    width: '90%',
-    alignSelf: 'center',
-    shadowColor: '#000',
-    shadowOffset: {width: 0, height: 2},
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
-  },
-  cardContent: {
-    flexDirection: 'row',
+    padding: 10,
+    marginBottom: 10,
     alignItems: 'center',
   },
-  sectionImage: {
-    width: 80,
-    height: 80,
+  recipeImage: {
+    width: width - 40,
+    height: 200,
     borderRadius: 10,
-    marginRight: 55,
   },
-  sectionText: {
+  recipeName: {
     fontSize: 20,
     fontWeight: 'bold',
+    marginTop: 8,
+  },
+  recipeDescription: {
+    fontSize: 16,
     color: '#5d4037',
     textAlign: 'center',
-    marginTop: 8,
-    marginBottom: 8,
+  },
+  recipeSectionTitle: {
+    marginBottom: 20,
+    fontSize: 20,
+    fontWeight: 'bold',
   },
   bottomNavBarContainer: {
     position: 'absolute',
     left: 0,
     right: 0,
     height: 70,
-  },
-  searchBar: {
-    height: 50, // Adjust as needed
-    backgroundColor: 'white', // Adjust as needed
-    justifyContent: 'center',
-    paddingHorizontal: 10,
-  },
-  input: {
-    flex: 1,
-    height: 50,
-    backgroundColor: '#FAF9F6',
-  },
-  addButton: {
-    padding: 10,
-    position: 'absolute',
-    marginLeft: 355,
-  },
-  icon: {
-    width: 20,
-    height: 20,
   },
 });
 
