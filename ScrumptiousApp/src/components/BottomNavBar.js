@@ -2,12 +2,12 @@ import React from 'react';
 import {View, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 
-const BottomNavBar = () => {
+const BottomNavBar = ({title, onMenuPress, onSearchPress}) => {
   const navigation = useNavigation();
 
   return (
     <View style={styles.tabBar}>
-      <TouchableOpacity onPress={() => navigation.navigate('Search')}>
+      <TouchableOpacity onPress={onSearchPress}>
         <Image
           source={require('../assets/search.png')}
           resizeMode="contain"

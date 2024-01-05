@@ -10,6 +10,7 @@ import {
   Image,
   Text,
   Animated,
+  TextInput,
 } from 'react-native';
 
 import HomeScreenService from '../../services/HomeScreenService';
@@ -29,6 +30,11 @@ const HomeScreen = () => {
   const [sections, setSections] = useState([]);
   const [isBottomToolbarVisible, setIsBottomToolbarVisible] = useState(true);
   const bottomBarPosition = useState(new Animated.Value(0))[0]; // Initialize Animated.Value
+  const [isSearchBarVisible, setIsSearchBarVisible] = useState(false); // New state for search bar visibility
+
+  const toggleSearchBar = () => {
+    setIsSearchBarVisible(!isSearchBarVisible);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -61,6 +67,21 @@ const HomeScreen = () => {
       <StatusBar barStyle="dark-content" />
       <View style={styles.container}>
         <TopNavBar title="Scrumptious" onMenuPress={toggleBottomToolbar} />
+        {isSearchBarVisible && (
+          <View style={styles.searchBar}>
+            <TextInput
+              style={styles.input}
+              placeholder="Search...."
+              placeholderTextColor="#888"
+            />
+            <TouchableOpacity style={styles.addButton}>
+              <Image
+                source={require('../../assets/arrow.png')}
+                style={styles.icon}
+              />
+            </TouchableOpacity>
+          </View>
+        )}
         <Image
           source={require('../../assets/banner.jpeg')}
           style={{width: width, height: height / 4, resizeMode: 'cover'}}
@@ -92,7 +113,7 @@ const HomeScreen = () => {
             bottom: bottomBarPosition,
           },
         ]}>
-        <BottomNavBar />
+        <BottomNavBar onSearchPress={toggleSearchBar} />
       </Animated.View>
     </SafeAreaView>
   );
@@ -150,6 +171,26 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     height: 70,
+  },
+  searchBar: {
+    height: 50, // Adjust as needed
+    backgroundColor: 'white', // Adjust as needed
+    justifyContent: 'center',
+    paddingHorizontal: 10,
+  },
+  input: {
+    flex: 1,
+    height: 50,
+    backgroundColor: '#FAF9F6',
+  },
+  addButton: {
+    padding: 10,
+    position: 'absolute',
+    marginLeft: 355,
+  },
+  icon: {
+    width: 20,
+    height: 20,
   },
 });
 
