@@ -31,6 +31,14 @@ const ReaderScreen = () => {
     {baseAmount: 1, unit: '', name: 'egg'},
   ]);
 
+  const InteractiveButton = () => (
+    <TouchableOpacity
+      style={styles.readerButton}
+      onPress={() => navigation.navigate('RecipeLanding')}>
+      <Text style={styles.readerButtonText}>Interactive</Text>
+    </TouchableOpacity>
+  );
+
   const RecipeStep = ({stepNumber, stepText}) => {
     const speak = () => {
       Tts.speak(stepText);
@@ -170,6 +178,7 @@ const ReaderScreen = () => {
               ))}
             </View>
           </View>
+          <InteractiveButton />
           <RecipeStep
             stepNumber="1"
             stepText="Preheat the oven to 450 degrees."
@@ -301,7 +310,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     alignSelf: 'center', // Align button to the center
     width: '60%', // Set the width to 60% of the parent container
-    marginBottom: 90,
+    marginTop: 10,
+    marginBottom: 10,
   },
   readerButtonText: {
     color: 'black',
