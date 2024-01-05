@@ -114,11 +114,14 @@ const RecipeList = () => {
         <ScrollView style={styles.scrollView}>
           <Text style={styles.recipeSectionTitle}>Saved Breakfast Recipes</Text>
           {recipes.map((recipe, index) => (
-            <View key={index} style={styles.recipeCard}>
+            <TouchableOpacity
+              key={index}
+              style={styles.recipeCard}
+              onPress={() => navigation.navigate('RecipeLanding')}>
               <Image source={recipe.image} style={styles.recipeImage} />
               <Text style={styles.recipeName}>{recipe.name}</Text>
               <Text style={styles.recipeDescription}>{recipe.description}</Text>
-            </View>
+            </TouchableOpacity>
           ))}
         </ScrollView>
       </View>
