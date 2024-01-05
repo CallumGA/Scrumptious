@@ -27,7 +27,7 @@ const images = {
 
 const {width, height} = Dimensions.get('window');
 
-const HomeScreen = () => {
+const RecipeList = () => {
   const [sections, setSections] = useState([]);
   const [isBottomToolbarVisible, setIsBottomToolbarVisible] = useState(true);
   const bottomBarPosition = useState(new Animated.Value(0))[0]; // Initialize Animated.Value
@@ -88,29 +88,10 @@ const HomeScreen = () => {
             </TouchableOpacity>
           </View>
         )}
-        <Image
-          source={require('../../assets/banner.jpeg')}
-          style={{width: width, height: height / 4, resizeMode: 'cover'}}
-        />
         <ScrollView
           style={styles.scrollView}
-          contentContainerStyle={styles.scrollViewContent}>
-          {sections.map((item, index) => (
-            <TouchableOpacity
-              key={index}
-              style={styles.sectionCard}
-              onPress={() => navigation.navigate('RecipeList')}
-              activeOpacity={0.7}>
-              <View style={styles.cardContent}>
-                <Image
-                  source={getImageForSection(item.section)}
-                  style={styles.sectionImage}
-                />
-                <Text style={styles.sectionText}>{item.section}</Text>
-              </View>
-            </TouchableOpacity>
-          ))}
-        </ScrollView>
+          contentContainerStyle={styles.scrollViewContent}
+        />
       </View>
       <Animated.View
         style={[
@@ -200,4 +181,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HomeScreen;
+export default RecipeList;
