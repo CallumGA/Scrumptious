@@ -77,10 +77,12 @@ const HomeScreen = () => {
           <View style={styles.searchBar}>
             <TextInput
               style={styles.input}
-              placeholder="Search...."
-              placeholderTextColor="#888"
+              placeholder="Breakfast recipes..."
+              placeholderTextColor="black"
             />
-            <TouchableOpacity style={styles.addButton}>
+            <TouchableOpacity
+              style={styles.addButton}
+              onPress={() => navigation.navigate('RecipeList')}>
               <Image
                 source={require('../../assets/arrow.png')}
                 style={styles.icon}
