@@ -16,6 +16,7 @@ import {
 import HomeScreenService from '../../services/HomeScreenService';
 import TopNavBar from '../../components/TopNavBar';
 import BottomNavBar from '../../components/BottomNavBar';
+import {useNavigation} from '@react-navigation/native';
 
 const images = {
   Dessert: require('../../assets/desert.jpeg'),
@@ -31,6 +32,7 @@ const HomeScreen = () => {
   const [isBottomToolbarVisible, setIsBottomToolbarVisible] = useState(true);
   const bottomBarPosition = useState(new Animated.Value(0))[0]; // Initialize Animated.Value
   const [isSearchBarVisible, setIsSearchBarVisible] = useState(false); // New state for search bar visibility
+  const navigation = useNavigation();
 
   const toggleSearchBar = () => {
     setIsSearchBarVisible(!isSearchBarVisible);
@@ -66,7 +68,11 @@ const HomeScreen = () => {
     <SafeAreaView style={styles.safeArea}>
       <StatusBar barStyle="dark-content" />
       <View style={styles.container}>
-        <TopNavBar title="Scrumptious" onMenuPress={toggleBottomToolbar} />
+        <TopNavBar
+          title="Scrumptious"
+          onMenuPress={toggleBottomToolbar}
+          navigation={navigation}
+        />
         {isSearchBarVisible && (
           <View style={styles.searchBar}>
             <TextInput

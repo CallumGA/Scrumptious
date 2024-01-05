@@ -1,11 +1,26 @@
-// src/components/TopNavBar.js
 import React from 'react';
 import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
 
 const TopNavBar = ({title, onMenuPress, navigation}) => {
-  // Add the onMenuPress prop here
+  const canGoBack = navigation && navigation.canGoBack();
+
+  const handleBackPress = () => {
+    if (canGoBack) {
+      navigation.goBack();
+    }
+  };
+
   return (
     <View style={styles.navbar}>
+      {canGoBack && (
+        <TouchableOpacity onPress={handleBackPress} style={styles.backButton}>
+          <Image
+            source={require('../assets/back.png')}
+            resizeMode="contain"
+            style={styles.icon}
+          />
+        </TouchableOpacity>
+      )}
       <Text style={styles.navTitle}>{title}</Text>
       <TouchableOpacity style={styles.hamburger} onPress={onMenuPress}>
         <Image
@@ -34,14 +49,17 @@ const styles = StyleSheet.create({
     fontSize: 22,
     color: '#000000',
   },
+  backButton: {
+    padding: 10, // Add padding for touch area
+  },
   hamburger: {
-    padding: 10, // Add padding to make the touch area larger
+    padding: 10,
   },
   icon: {
     width: 30,
     height: 30,
   },
-  // Add any additional styles you may need
+  // Additional styles
 });
 
 export default TopNavBar;

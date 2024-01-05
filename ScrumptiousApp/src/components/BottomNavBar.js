@@ -26,6 +26,7 @@ const BottomNavBar = ({title, onMenuPress, onSearchPress}) => {
           source={require('../assets/eat.png')}
           resizeMode="contain"
           style={styles.icon}
+          navigation={navigation}
         />
       </TouchableOpacity>
     </View>

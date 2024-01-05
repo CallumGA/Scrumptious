@@ -50,7 +50,11 @@ const NewRecipe = () => {
     <SafeAreaView style={styles.safeArea}>
       <StatusBar barStyle="dark-content" />
       <View style={styles.container}>
-        <TopNavBar title="Scrumptious" onMenuPress={toggleBottomToolbar} />
+        <TopNavBar
+          title="Scrumptious"
+          onMenuPress={toggleBottomToolbar}
+          navigation={navigation}
+        />
         <View style={styles.mainContent}>
           <View style={styles.content}>
             <Text style={styles.header}>RECIPE URL</Text>
