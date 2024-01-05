@@ -330,7 +330,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   amountBubble: {
-    backgroundColor: 'white',
+    backgroundColor: '#A9A9A9',
     borderRadius: 15,
     padding: 5,
     paddingHorizontal: 8,
@@ -352,7 +352,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
   },
   portionButton: {
-    backgroundColor: '#ddd',
+    backgroundColor: '#A9A9A9',
     padding: 5,
     marginHorizontal: 10,
     borderRadius: 5,
