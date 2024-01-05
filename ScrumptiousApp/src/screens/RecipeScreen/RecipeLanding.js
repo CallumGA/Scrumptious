@@ -87,6 +87,7 @@ const RecipeLanding = () => {
         <TopNavBar
           title="Chocolate cookies"
           onMenuPress={toggleBottomToolbar}
+          navigation={navigation}
         />
         <View style={styles.imageContainer}>
           <Image
@@ -96,12 +97,6 @@ const RecipeLanding = () => {
           <View style={styles.activeTimeBubble}>
             <Text style={styles.activeTimeText}>Active: 15 min</Text>
           </View>
-          <TouchableOpacity onPress={() => {}} style={styles.backButton}>
-            <Image
-              source={require('../../assets/back.png')}
-              style={styles.backIcon}
-            />
-          </TouchableOpacity>
           <TouchableOpacity onPress={() => {}} style={styles.favoriteButton}>
             <Image
               source={require('../../assets/heart.png')}
