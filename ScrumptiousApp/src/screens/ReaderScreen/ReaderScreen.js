@@ -18,9 +18,9 @@ import Tts from 'react-native-tts';
 
 const {width} = Dimensions.get('window');
 
-const IntertactiveRecipe = () => {
-  const [isBottomToolbarVisible, setIsBottomToolbarVisible] = useState(true);
-  const bottomBarPosition = useState(new Animated.Value(0))[0];
+const ReaderScreen = () => {
+  const [isBottomToolbarVisible, setIsBottomToolbarVisible] = useState(false);
+  const bottomBarPosition = useState(new Animated.Value(-80))[0];
   const navigation = useNavigation();
 
   const [ingredients, setIngredients] = useState([
@@ -42,12 +42,6 @@ const IntertactiveRecipe = () => {
           <Text style={styles.stepNumberText}>{stepNumber}</Text>
         </View>
         <Text style={styles.stepText}>{stepText}</Text>
-        <TouchableOpacity onPress={speak} style={styles.soundIconButton}>
-          <Image
-            source={require('../../assets/sound-icon.png')}
-            style={styles.soundIcon}
-          />
-        </TouchableOpacity>
       </View>
     );
   };
@@ -72,19 +66,13 @@ const IntertactiveRecipe = () => {
     return () => clearInterval(timerId);
   }, []);
 
-  // Format seconds into minutes and seconds
-  const formatTime = () => {
-    const minutes = Math.floor(secondsRemaining / 60);
-    const seconds = secondsRemaining % 60;
-    return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-  };
   // Function to update the ingredient amounts based on the portion
   const updateIngredientsForPortion = newPortion => {
     const updatedIngredients = ingredients.map(ingredient => {
       const newAmount = ingredient.baseAmount * newPortion;
       return {...ingredient, amount: newAmount};
     });
-    setIngredients(updatedIngredients);
+    setIngredients(!updatedIngredients);
   };
 
   // Function to handle portion increase
@@ -109,12 +97,12 @@ const IntertactiveRecipe = () => {
 
   const toggleBottomToolbar = () => {
     Animated.timing(bottomBarPosition, {
-      toValue: isBottomToolbarVisible ? -100 : 0,
+      toValue: isBottomToolbarVisible ? 0 : -80, // Here, we change the target value based on the visibility
       duration: 300,
       useNativeDriver: false,
     }).start();
 
-    setIsBottomToolbarVisible(!isBottomToolbarVisible);
+    setIsBottomToolbarVisible(!isBottomToolbarVisible); // Toggle the visibility state
   };
 
   return (
@@ -154,13 +142,15 @@ const IntertactiveRecipe = () => {
                 <Text>Portions</Text>
                 <TouchableOpacity
                   onPress={decreasePortion}
-                  style={styles.portionButton}>
+                  style={styles.portionButton}
+                  disabled={true}>
                   <Text style={styles.portionButtonText}>-</Text>
                 </TouchableOpacity>
                 <Text style={styles.portionCount}>{portion}</Text>
                 <TouchableOpacity
                   onPress={increasePortion}
-                  style={styles.portionButton}>
+                  style={styles.portionButton}
+                  disabled={true}>
                   <Text style={styles.portionButtonText}>+</Text>
                 </TouchableOpacity>
               </View>
@@ -184,8 +174,21 @@ const IntertactiveRecipe = () => {
             stepNumber="1"
             stepText="Preheat the oven to 450 degrees."
           />
+          <RecipeStep
+            stepNumber="2"
+            stepText="Form the cookies into small 1.5 inch discs on a greased baking sheet."
+          />
+          <RecipeStep
+            stepNumber="3"
+            stepText="Once oven is preheated to 450 degrees, place the baking sheet in the oven, centre rack."
+          />
+          <RecipeStep stepNumber="4" stepText="Bake for 25 minutes. " />
+          <RecipeStep
+            stepNumber="5"
+            stepText="After 25 minutes, remove from oven and let cookies settle for 10 minutes."
+          />
+          <RecipeStep stepNumber="6" stepText="Enjoy!" />
         </ScrollView>
-        <Text style={styles.timerText}>{formatTime()}</Text>
       </View>
       <Animated.View
         style={[
@@ -359,14 +362,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 5,
   },
-  timerText: {
-    fontSize: 48, // Large font size for the timer
-    textAlign: 'center',
-    fontWeight: 'bold',
-    color: '#000',
-    paddingVertical: 20, // Space above and below the timer text
-    marginBottom: 50,
-  },
   stepContainer: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -405,4 +400,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default IntertactiveRecipe;
+export default ReaderScreen;

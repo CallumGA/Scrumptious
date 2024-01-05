@@ -11,6 +11,7 @@ import TopNavBar from "./src/components/TopNavBar";
 import {Animated} from "react-native";
 import RecipeLanding from "./src/screens/RecipeScreen/RecipeLanding";
 import InteractiveRecipe from "./src/screens/RecipeScreen/InteractiveRecipe";
+import ReaderScreen from "./src/screens/ReaderScreen/ReaderScreen";
 
 const Stack = createStackNavigator();
 
@@ -26,6 +27,8 @@ const App = () => {
           <Stack.Screen name="NewRecipe" component={NewRecipe} />
             <Stack.Screen name="RecipeLanding" component={RecipeLanding} />
             <Stack.Screen name="InteractiveRecipe" component={InteractiveRecipe} />
+            <Stack.Screen name="ReaderScreen" component={ReaderScreen} />
+
 
         </Stack.Navigator>
 
