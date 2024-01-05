@@ -10,6 +10,7 @@ import {
   ScrollView,
   Dimensions,
   Animated,
+  FlatList,
 } from 'react-native';
 import TopNavBar from '../../components/TopNavBar';
 import BottomNavBar from '../../components/BottomNavBar';
@@ -38,10 +39,8 @@ const RecipeLanding = () => {
     {baseAmount: 1, unit: '', name: 'egg'},
   ]);
 
-  // State for portion count
   const [portion, setPortion] = useState(1);
 
-  // Function to update the ingredient amounts based on the portion
   const updateIngredientsForPortion = newPortion => {
     const updatedIngredients = ingredients.map(ingredient => {
       const newAmount = ingredient.baseAmount * newPortion;
@@ -50,20 +49,16 @@ const RecipeLanding = () => {
     setIngredients(updatedIngredients);
   };
 
-  // Function to handle portion increase
   const increasePortion = () => {
     if (portion < 2) {
-      // Assuming the maximum portion is 2
       const newPortion = portion + 1;
       setPortion(newPortion);
       updateIngredientsForPortion(newPortion);
     }
   };
 
-  // Function to handle portion decrease
   const decreasePortion = () => {
     if (portion > 1) {
-      // Assuming the minimum portion is 1
       const newPortion = portion - 1;
       setPortion(newPortion);
       updateIngredientsForPortion(newPortion);
@@ -76,9 +71,19 @@ const RecipeLanding = () => {
       duration: 300,
       useNativeDriver: false,
     }).start();
-
     setIsBottomToolbarVisible(!isBottomToolbarVisible);
   };
+
+  const renderIngredientItem = ({item}) => (
+    <TouchableOpacity style={styles.ingredientItem}>
+      <View style={styles.amountBubble}>
+        <Text style={styles.amountText}>
+          {portion === 1 ? item.baseAmount : item.amount} {item.unit}
+        </Text>
+      </View>
+      <Text style={styles.ingredientName}>{item.name}</Text>
+    </TouchableOpacity>
+  );
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -104,41 +109,30 @@ const RecipeLanding = () => {
             />
           </TouchableOpacity>
         </View>
-        <ScrollView style={styles.scrollView}>
-          <View style={styles.ingredientSection}>
-            <View style={styles.sectionHeader}>
-              <Text style={styles.ingredientTitle}>Ingredients</Text>
-              <View style={styles.portionContainer}>
-                <Text>Portions</Text>
-                <TouchableOpacity
-                  onPress={decreasePortion}
-                  style={styles.portionButton}>
-                  <Text style={styles.portionButtonText}>-</Text>
-                </TouchableOpacity>
-                <Text style={styles.portionCount}>{portion}</Text>
-                <TouchableOpacity
-                  onPress={increasePortion}
-                  style={styles.portionButton}>
-                  <Text style={styles.portionButtonText}>+</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-            <View style={styles.ingredientGrid}>
-              {ingredients.map((item, index) => (
-                <View key={index} style={styles.ingredientItem}>
-                  <View style={styles.amountBubble}>
-                    <Text style={styles.amountText}>
-                      {portion === 1
-                        ? item.baseAmount + ' ' + item.unit
-                        : item.amount + ' ' + item.unit}
-                    </Text>
-                  </View>
-                  <Text style={styles.ingredientName}>{item.name}</Text>
-                </View>
-              ))}
+        <View style={styles.ingredientSection}>
+          <View style={styles.sectionHeader}>
+            <Text style={styles.ingredientTitle}>Ingredients</Text>
+            <View style={styles.portionContainer}>
+              <TouchableOpacity
+                onPress={decreasePortion}
+                style={styles.portionButton}>
+                <Text style={styles.portionButtonText}>-</Text>
+              </TouchableOpacity>
+              <Text style={styles.portionCount}>{portion}</Text>
+              <TouchableOpacity
+                onPress={increasePortion}
+                style={styles.portionButton}>
+                <Text style={styles.portionButtonText}>+</Text>
+              </TouchableOpacity>
             </View>
           </View>
-        </ScrollView>
+          <FlatList
+            data={ingredients}
+            renderItem={renderIngredientItem}
+            keyExtractor={(item, index) => index.toString()}
+            numColumns={2}
+          />
+        </View>
         <TouchableOpacity
           style={styles.startCookingButton}
           onPress={() => navigation.navigate('InteractiveRecipe')}>
@@ -217,9 +211,8 @@ const styles = StyleSheet.create({
   scrollView: {
     flex: 1,
   },
-
   ingredientTitle: {
-    fontSize: 24,
+    fontSize: 20,
     fontWeight: 'bold',
     color: '#5d4037',
     marginBottom: 10,
@@ -242,7 +235,7 @@ const styles = StyleSheet.create({
   ingredientItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingVertical: 5,
+    paddingVertical: 2,
     width: '50%', // Each item takes up half the width of the container
   },
   ingredientName: {
@@ -327,6 +320,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center', // Align button to the center
     width: '60%', // Set the width to 60% of the parent container
     marginBottom: 20,
+    marginTop: 60,
   },
   startCookingButtonText: {
     color: 'white',
