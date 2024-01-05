@@ -1,19 +1,22 @@
 import React from 'react';
 import {View, StyleSheet, TouchableOpacity, Image} from 'react-native';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 
-const BottomNavBar = ({title, onMenuPress, onSearchPress}) => {
+const BottomNavBar = ({onMenuPress, onSearchPress}) => {
   const navigation = useNavigation();
+  const route = useRoute();
 
   return (
     <View style={styles.tabBar}>
-      <TouchableOpacity onPress={onSearchPress}>
-        <Image
-          source={require('../assets/search.png')}
-          resizeMode="contain"
-          style={styles.icon}
-        />
-      </TouchableOpacity>
+      {route.name === 'Home' && (
+        <TouchableOpacity onPress={onSearchPress}>
+          <Image
+            source={require('../assets/search.png')}
+            resizeMode="contain"
+            style={styles.icon}
+          />
+        </TouchableOpacity>
+      )}
       <TouchableOpacity onPress={() => navigation.navigate('Home')}>
         <Image
           source={require('../assets/home.png')}
@@ -26,7 +29,6 @@ const BottomNavBar = ({title, onMenuPress, onSearchPress}) => {
           source={require('../assets/eat.png')}
           resizeMode="contain"
           style={styles.icon}
-          navigation={navigation}
         />
       </TouchableOpacity>
     </View>
