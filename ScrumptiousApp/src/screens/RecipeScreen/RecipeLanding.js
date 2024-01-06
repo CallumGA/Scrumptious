@@ -32,6 +32,24 @@ const RecipeLanding = () => {
     </TouchableOpacity>
   );
 
+  const OptionOneButton = () => (
+    <TouchableOpacity style={styles.optionButton}>
+      <Text style={styles.readerButtonText}>1 cup cocoa</Text>
+    </TouchableOpacity>
+  );
+
+  const OptionTwoButton = () => (
+    <TouchableOpacity style={styles.optionButton}>
+      <Text style={styles.readerButtonText}>1/2 cup chocolate</Text>
+    </TouchableOpacity>
+  );
+
+  const CancelButton = () => (
+    <TouchableOpacity style={styles.cancelButton}>
+      <Text style={styles.readerButtonText}>Cancel</Text>
+    </TouchableOpacity>
+  );
+
   const [ingredients, setIngredients] = useState([
     {baseAmount: 1, unit: 'cup', name: 'peanut butter'},
     {baseAmount: 1, unit: 'cup', name: 'coconut sugar'},
@@ -144,15 +162,9 @@ const RecipeLanding = () => {
         </View>
         {selectedIngredient ? (
           <View>
-            <TouchableOpacity style={styles.newButtonStyle}>
-              <Text>Option 1</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.newButtonStyle}>
-              <Text>Option 2</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.newButtonStyle}>
-              <Text>Cancel</Text>
-            </TouchableOpacity>
+            <OptionOneButton />
+            <OptionTwoButton />
+            <CancelButton />
           </View>
         ) : (
           <>
@@ -276,6 +288,26 @@ const styles = StyleSheet.create({
     alignSelf: 'center', // Align button to the center
     width: '60%', // Set the width to 60% of the parent container
     marginBottom: 90,
+  },
+  optionButton: {
+    backgroundColor: '#dbe7e0',
+    padding: 10,
+    borderRadius: 25,
+    alignItems: 'center',
+    alignSelf: 'center', // Align button to the center
+    width: '60%', // Set the width to 60% of the parent container
+    marginBottom: 10,
+    marginTop: 20,
+  },
+  cancelButton: {
+    backgroundColor: '#FFB3B3',
+    padding: 10,
+    borderRadius: 25,
+    alignItems: 'center',
+    alignSelf: 'center', // Align button to the center
+    width: '60%', // Set the width to 60% of the parent container
+    marginBottom: 10,
+    marginTop: 20,
   },
   readerButtonText: {
     color: 'black',
