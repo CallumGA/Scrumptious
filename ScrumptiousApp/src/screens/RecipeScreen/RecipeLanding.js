@@ -33,14 +33,18 @@ const RecipeLanding = () => {
   );
 
   const OptionOneButton = () => (
-    <TouchableOpacity style={styles.optionButton}>
-      <Text style={styles.readerButtonText}>1 cup cocoa</Text>
+    <TouchableOpacity
+      style={styles.optionButton}
+      onPress={() => replaceIngredient('cocoa powder')}>
+      <Text style={styles.readerButtonText}>cocoa powder</Text>
     </TouchableOpacity>
   );
 
   const OptionTwoButton = () => (
-    <TouchableOpacity style={styles.optionButton}>
-      <Text style={styles.readerButtonText}>1/2 cup chocolate</Text>
+    <TouchableOpacity
+      style={styles.optionButton}
+      onPress={() => replaceIngredient('milk chocolate')}>
+      <Text style={styles.readerButtonText}>milk chocolate</Text>
     </TouchableOpacity>
   );
 
@@ -63,6 +67,17 @@ const RecipeLanding = () => {
   // Function to handle ingredient selection
   const selectIngredient = ingredient => {
     setSelectedIngredient(ingredient);
+  };
+
+  const replaceIngredient = newIngredient => {
+    const newIngredients = ingredients.map(ingredient => {
+      if (ingredient.name === 'chocolate sauce') {
+        return {...ingredient, name: newIngredient};
+      }
+      return ingredient;
+    });
+    setIngredients(newIngredients);
+    setSelectedIngredient(null); // Reset selection
   };
 
   const updateIngredientsForPortion = newPortion => {
@@ -160,7 +175,7 @@ const RecipeLanding = () => {
             numColumns={2}
           />
         </View>
-        {selectedIngredient ? (
+        {selectedIngredient === 'chocolate sauce' ? (
           <View>
             <OptionOneButton />
             <OptionTwoButton />
