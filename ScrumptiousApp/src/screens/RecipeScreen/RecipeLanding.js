@@ -22,6 +22,7 @@ const RecipeLanding = () => {
   const [isBottomToolbarVisible, setIsBottomToolbarVisible] = useState(true);
   const bottomBarPosition = useState(new Animated.Value(0))[0];
   const navigation = useNavigation();
+  const [selectedIngredient, setSelectedIngredient] = useState(null);
 
   const ReaderButton = () => (
     <TouchableOpacity
@@ -40,6 +41,11 @@ const RecipeLanding = () => {
   ]);
 
   const [portion, setPortion] = useState(1);
+
+  // Function to handle ingredient selection
+  const selectIngredient = ingredient => {
+    setSelectedIngredient(ingredient);
+  };
 
   const updateIngredientsForPortion = newPortion => {
     const updatedIngredients = ingredients.map(ingredient => {
@@ -74,8 +80,11 @@ const RecipeLanding = () => {
     setIsBottomToolbarVisible(!isBottomToolbarVisible);
   };
 
-  const renderIngredientItem = ({item}) => (
-    <TouchableOpacity style={styles.ingredientItem}>
+  const renderIngredientItem = ({item, index}) => (
+    <TouchableOpacity
+      key={index}
+      style={styles.ingredientItem}
+      onPress={() => selectIngredient(item.name)}>
       <View style={styles.amountBubble}>
         <Text style={styles.amountText}>
           {portion === 1 ? item.baseAmount : item.amount} {item.unit}
@@ -133,12 +142,28 @@ const RecipeLanding = () => {
             numColumns={2}
           />
         </View>
-        <TouchableOpacity
-          style={styles.startCookingButton}
-          onPress={() => navigation.navigate('InteractiveRecipe')}>
-          <Text style={styles.startCookingButtonText}>Start Cooking</Text>
-        </TouchableOpacity>
-        <ReaderButton />
+        {selectedIngredient ? (
+          <View>
+            <TouchableOpacity style={styles.newButtonStyle}>
+              <Text>Option 1</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.newButtonStyle}>
+              <Text>Option 2</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.newButtonStyle}>
+              <Text>Cancel</Text>
+            </TouchableOpacity>
+          </View>
+        ) : (
+          <>
+            <TouchableOpacity
+              style={styles.startCookingButton}
+              onPress={() => navigation.navigate('InteractiveRecipe')}>
+              <Text style={styles.startCookingButtonText}>Start Cooking</Text>
+            </TouchableOpacity>
+            <ReaderButton />
+          </>
+        )}
       </View>
       <Animated.View
         style={[
