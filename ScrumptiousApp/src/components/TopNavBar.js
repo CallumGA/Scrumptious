@@ -12,7 +12,7 @@ const TopNavBar = ({title, onMenuPress, navigation}) => {
 
   return (
     <View style={styles.navbar}>
-      {canGoBack && (
+      {canGoBack ? (
         <TouchableOpacity onPress={handleBackPress} style={styles.backButton}>
           <Image
             source={require('../assets/back.png')}
@@ -20,15 +20,11 @@ const TopNavBar = ({title, onMenuPress, navigation}) => {
             style={styles.icon}
           />
         </TouchableOpacity>
+      ) : (
+        <View style={styles.placeholder} />
       )}
       <Text style={styles.navTitle}>{title}</Text>
-      <TouchableOpacity style={styles.hamburger} onPress={onMenuPress}>
-        <Image
-          source={require('../assets/menu.png')}
-          resizeMode="contain"
-          style={styles.icon}
-        />
-      </TouchableOpacity>
+      <View style={styles.placeholder} />
     </View>
   );
 };
@@ -50,10 +46,11 @@ const styles = StyleSheet.create({
     color: '#000000',
   },
   backButton: {
-    padding: 10, // Add padding for touch area
-  },
-  hamburger: {
     padding: 10,
+  },
+  placeholder: {
+    padding: 10,
+    opacity: 0, // Make it invisible
   },
   icon: {
     width: 30,
