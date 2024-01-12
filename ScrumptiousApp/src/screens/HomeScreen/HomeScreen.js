@@ -10,7 +10,6 @@ import {
   Image,
   Text,
   Animated,
-  TextInput,
 } from 'react-native';
 
 import HomeScreenService from '../../services/HomeScreenService';
@@ -30,8 +29,8 @@ const {width, height} = Dimensions.get('window');
 const HomeScreen = () => {
   const [sections, setSections] = useState([]);
   const [isBottomToolbarVisible, setIsBottomToolbarVisible] = useState(true);
-  const bottomBarPosition = useState(new Animated.Value(0))[0]; // Initialize Animated.Value
-  const [isSearchBarVisible, setIsSearchBarVisible] = useState(false); // New state for search bar visibility
+  const bottomBarPosition = useState(new Animated.Value(0))[0];
+  const [isSearchBarVisible, setIsSearchBarVisible] = useState(false);
   const navigation = useNavigation();
 
   const toggleSearchBar = () => {
@@ -73,23 +72,6 @@ const HomeScreen = () => {
           onMenuPress={toggleBottomToolbar}
           navigation={navigation}
         />
-        {isSearchBarVisible && (
-          <View style={styles.searchBar}>
-            <TextInput
-              style={styles.input}
-              placeholder="Breakfast recipes..."
-              placeholderTextColor="black"
-            />
-            <TouchableOpacity
-              style={styles.addButton}
-              onPress={() => navigation.navigate('RecipeList')}>
-              <Image
-                source={require('../../assets/arrow.png')}
-                style={styles.icon}
-              />
-            </TouchableOpacity>
-          </View>
-        )}
         <Image
           source={require('../../assets/banner.jpeg')}
           style={{width: width, height: height / 4, resizeMode: 'cover'}}
@@ -121,7 +103,10 @@ const HomeScreen = () => {
             bottom: bottomBarPosition,
           },
         ]}>
-        <BottomNavBar onSearchPress={toggleSearchBar} />
+        <BottomNavBar
+          onSearchPress={toggleSearchBar}
+          showSearchBar={isSearchBarVisible}
+        />
       </Animated.View>
     </SafeAreaView>
   );
@@ -130,11 +115,11 @@ const HomeScreen = () => {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: '#efe4e1', // The color for the safe area
+    backgroundColor: '#efe4e1',
   },
   container: {
     flex: 1,
-    backgroundColor: '#ffffff', // The color for the main content area
+    backgroundColor: '#ffffff',
   },
   scrollView: {
     flex: 1,
@@ -179,26 +164,6 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     height: 70,
-  },
-  searchBar: {
-    height: 50, // Adjust as needed
-    backgroundColor: 'white', // Adjust as needed
-    justifyContent: 'center',
-    paddingHorizontal: 10,
-  },
-  input: {
-    flex: 1,
-    height: 50,
-    backgroundColor: '#FAF9F6',
-  },
-  addButton: {
-    padding: 10,
-    position: 'absolute',
-    marginLeft: 355,
-  },
-  icon: {
-    width: 20,
-    height: 20,
   },
 });
 
