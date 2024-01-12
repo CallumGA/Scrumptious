@@ -155,6 +155,7 @@ const RecipeLanding = () => {
           <View style={styles.sectionHeader}>
             <Text style={styles.ingredientTitle}>Ingredients</Text>
             <View style={styles.portionContainer}>
+              <Text>Portions</Text>
               <TouchableOpacity
                 onPress={decreasePortion}
                 style={styles.portionButton}>
