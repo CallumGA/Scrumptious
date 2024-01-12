@@ -6,68 +6,68 @@ import {
   Image,
   TextInput,
 } from 'react-native';
-import {useNavigation, useRoute} from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 
-const BottomNavBar = ({onSearchPress, showSearchBar}) => {
+const BottomNavBar = ({ onSearchPress, showSearchBar }) => {
   const navigation = useNavigation();
   const route = useRoute();
+
   const handleArrowPress = () => {
     navigation.navigate('RecipeList');
   };
+
   return (
-    <View style={styles.tabBar}>
-      {showSearchBar ? (
-        <View style={styles.searchBar}>
-          <TextInput
-            style={styles.input}
-            placeholder="Search..."
-            placeholderTextColor="black"
-          />
-          <TouchableOpacity style={styles.iconButton} onPress={onSearchPress}>
-            <Image
-              source={require('../assets/close.png')}
-              resizeMode="contain"
-              style={styles.icon}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.iconButton}
-            onPress={handleArrowPress}>
-            <Image
-              source={require('../assets/arrow.png')}
-              resizeMode="contain"
-              style={styles.icon}
-            />
-          </TouchableOpacity>
-        </View>
-      ) : (
-        <>
-          {route.name === 'Home' && (
-            <TouchableOpacity onPress={onSearchPress}>
-              <Image
-                source={require('../assets/search.png')}
-                resizeMode="contain"
-                style={styles.icon}
+      <View style={styles.tabBar}>
+        {showSearchBar ? (
+            <View style={styles.searchBarContainer}>
+              <TextInput
+                  style={styles.input}
+                  placeholder="Search..."
+                  placeholderTextColor="black"
               />
-            </TouchableOpacity>
-          )}
-          <TouchableOpacity onPress={() => navigation.navigate('Home')}>
-            <Image
-              source={require('../assets/home.png')}
-              resizeMode="contain"
-              style={styles.icon}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate('NewRecipe')}>
-            <Image
-              source={require('../assets/eat.png')}
-              resizeMode="contain"
-              style={styles.icon}
-            />
-          </TouchableOpacity>
-        </>
-      )}
-    </View>
+              <TouchableOpacity style={[styles.iconButton, styles.closeIcon]} onPress={onSearchPress}>
+                <Image
+                    source={require('../assets/close.png')}
+                    resizeMode="contain"
+                    style={styles.icon}
+                />
+              </TouchableOpacity>
+              <TouchableOpacity style={[styles.iconButton, styles.arrowIcon]} onPress={handleArrowPress}>
+                <Image
+                    source={require('../assets/arrow.png')}
+                    resizeMode="contain"
+                    style={styles.icon}
+                />
+              </TouchableOpacity>
+            </View>
+        ) : (
+            <>
+              {route.name === 'Home' && (
+                  <TouchableOpacity onPress={onSearchPress}>
+                    <Image
+                        source={require('../assets/search.png')}
+                        resizeMode="contain"
+                        style={styles.icon}
+                    />
+                  </TouchableOpacity>
+              )}
+              <TouchableOpacity onPress={() => navigation.navigate('Home')}>
+                <Image
+                    source={require('../assets/home.png')}
+                    resizeMode="contain"
+                    style={styles.icon}
+                />
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => navigation.navigate('NewRecipe')}>
+                <Image
+                    source={require('../assets/eat.png')}
+                    resizeMode="contain"
+                    style={styles.icon}
+                />
+              </TouchableOpacity>
+            </>
+        )}
+      </View>
   );
 };
 
@@ -86,11 +86,12 @@ const styles = StyleSheet.create({
     width: 30,
     height: 30,
   },
-  searchBar: {
+  searchBarContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     height: 50,
     flex: 1,
+    paddingRight: 10,
   },
   input: {
     flex: 1,
@@ -98,8 +99,17 @@ const styles = StyleSheet.create({
     backgroundColor: '#FAF9F6',
     paddingLeft: 10,
   },
-  searchButton: {
-    paddingRight: 10,
+  iconButton: {
+    position: 'absolute',
+    height: '100%',
+    justifyContent: 'center',
+    paddingHorizontal: 10,
+  },
+  closeIcon: {
+    right: 50,
+  },
+  arrowIcon: {
+    right: 0,
   },
 });
 
