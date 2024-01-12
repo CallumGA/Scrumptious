@@ -19,8 +19,8 @@ import Tts from 'react-native-tts';
 const {width} = Dimensions.get('window');
 
 const ReaderScreen = () => {
-  const [isBottomToolbarVisible, setIsBottomToolbarVisible] = useState(false);
-  const bottomBarPosition = useState(new Animated.Value(-80))[0];
+  const [isBottomToolbarVisible, setIsBottomToolbarVisible] = useState(true); // Set to true
+  const bottomBarPosition = useState(new Animated.Value(0))[0]; // Set initial value to 0
   const navigation = useNavigation();
 
   const [ingredients, setIngredients] = useState([
@@ -86,7 +86,6 @@ const ReaderScreen = () => {
   // Function to handle portion increase
   const increasePortion = () => {
     if (portion < 2) {
-      // Assuming the maximum portion is 2
       const newPortion = portion + 1;
       setPortion(newPortion);
       updateIngredientsForPortion(newPortion);
@@ -96,46 +95,17 @@ const ReaderScreen = () => {
   // Function to handle portion decrease
   const decreasePortion = () => {
     if (portion > 1) {
-      // Assuming the minimum portion is 1
       const newPortion = portion - 1;
       setPortion(newPortion);
       updateIngredientsForPortion(newPortion);
     }
   };
 
-  const toggleBottomToolbar = () => {
-    Animated.timing(bottomBarPosition, {
-      toValue: isBottomToolbarVisible ? 0 : -80, // Here, we change the target value based on the visibility
-      duration: 300,
-      useNativeDriver: false,
-    }).start();
-
-    setIsBottomToolbarVisible(!isBottomToolbarVisible); // Toggle the visibility state
-  };
-
   return (
     <SafeAreaView style={styles.safeArea}>
       <StatusBar barStyle="dark-content" />
       <View style={styles.container}>
-        <TopNavBar
-          title="Chocolate cookies"
-          onMenuPress={toggleBottomToolbar}
-        />
-        <View style={styles.imageContainer}>
-          <Image
-            source={require('../../assets/recipe-image.jpg')}
-            style={styles.recipeImage}
-          />
-          <View style={styles.activeTimeBubble}>
-            <Text style={styles.activeTimeText}>Active: 15 min</Text>
-          </View>
-          <TouchableOpacity onPress={() => {}} style={styles.favoriteButton}>
-            <Image
-              source={require('../../assets/heart.png')}
-              style={styles.favoriteIcon}
-            />
-          </TouchableOpacity>
-        </View>
+        <TopNavBar title="Chocolate cookies" />
         <ScrollView style={styles.scrollView}>
           <View style={styles.ingredientSection}>
             <View style={styles.sectionHeader}>
