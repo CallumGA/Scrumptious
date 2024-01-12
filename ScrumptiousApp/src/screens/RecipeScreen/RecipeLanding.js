@@ -295,15 +295,6 @@ const styles = StyleSheet.create({
     flexShrink: 1, // Allows text to shrink and wrap if necessary
     marginLeft: 5, // Adds space between the amount bubble and the ingredient name
   },
-  readerButton: {
-    backgroundColor: '#dbe7e0',
-    padding: 15,
-    borderRadius: 25,
-    alignItems: 'center',
-    alignSelf: 'center', // Align button to the center
-    width: '60%', // Set the width to 60% of the parent container
-    marginBottom: 90,
-  },
   optionButton: {
     backgroundColor: '#dbe7e0',
     padding: 10,
@@ -384,20 +375,30 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 5,
   },
-  startCookingButton: {
-    backgroundColor: '#4CAF50', // A green color for visibility
-    padding: 15,
-    borderRadius: 25,
-    alignItems: 'center',
-    alignSelf: 'center', // Align button to the center
-    width: '60%', // Set the width to 60% of the parent container
-    marginBottom: 20,
-    marginTop: 60,
-  },
   startCookingButtonText: {
     color: 'white',
     fontSize: 18,
     fontWeight: 'bold',
+  },
+  readerButton: {
+    backgroundColor: '#dbe7e0', // You can adjust the color if needed
+    padding: 10,
+    borderRadius: 25,
+    alignItems: 'center',
+    alignSelf: 'center',
+    width: '60%',
+    marginBottom: 10,
+    marginTop: 20,
+  },
+  startCookingButton: {
+    backgroundColor: '#4CAF50', // Adjust the color if different from the option button
+    padding: 10,
+    borderRadius: 25,
+    alignItems: 'center',
+    alignSelf: 'center',
+    width: '60%',
+    marginBottom: 10,
+    marginTop: 20,
   },
 });
 
